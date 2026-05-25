@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | WoundSense AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar container">
+        <a class="brand" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WoundSense AI logo">
+            <span>WoundSense AI</span>
+        </a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle menu">Menu</button>
+        <div class="nav-links" data-nav-menu>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="/about">About</a>
+            <a href="{{ url_for('index') }}#how-it-works">How It Works</a>
+            <a class="active-link" href="/contact">Contact</a>
+            <a href="/login">Patient Login</a>
+            <a href="/signup">Patient Sign Up</a>
+            <a href="/doctor-login">Doctor Login</a>
+        </div>
+    </nav>
+</header>
+
+<main class="section">
+    <div class="container auth-wrap">
+        <div class="card auth-card">
+            <h2>Contact Our Team</h2>
+            <p>For technical support, deployment help, or medical AI inquiries.</p>
+            <form>
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <input id="fullName" type="text" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="you@hospital.org">
+                </div>
+                <div class="input-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Write your message"></textarea>
+                </div>
+                <button class="btn btn-primary full-width" type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <h4>WoundSense AI</h4>
+            <p>Reach us for implementation, integration, and platform support requests.</p>
+        </div>
+        <div class="footer-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="/about">About</a>
+            <a href="{{ url_for('index') }}#how-it-works">How It Works</a>
+            <a href="/login">Patient Login</a>
+            <a href="/signup">Patient Sign Up</a>
+            <a href="/doctor-login">Doctor Login</a>
+        </div>
+    </div>
+</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

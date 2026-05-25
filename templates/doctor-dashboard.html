@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('doctor.dash.page_title') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-doctor-portal">
+    <div class="ws-doctor-layout">
+        {% with sidebar_grad_id='wsDoctorDashSidebarGrad', doctor_nav='dashboard' %}
+        {% include 'includes/doctor_sidebar.html' %}
+        {% endwith %}
+
+        <div class="ws-doctor-main">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="ws-flash-wrap" role="alert">
+                        {% for category, message in messages %}
+                            <p class="ws-flash ws-flash--{{ category }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <header class="ws-doctor-main__header">
+                <div>
+                    <h1 class="ws-doctor-main__title">{{ t('doctor.dash.welcome_prefix') }}{{ doctor_name }}</h1>
+                    <p class="ws-doctor-main__subtitle">{{ t('doctor.dash.subtitle') }}</p>
+                </div>
+                <a class="ws-nav__pill ws-nav__pill--ghost" href="#patients-table">{{ t('doctor.dash.link_view_all_patients') }}</a>
+            </header>
+
+            <section class="ws-doctor-section">
+                <h2 class="ws-doctor-section__title">{{ t('doctor.dash.section.overview') }}</h2>
+                <div class="ws-doctor-kpi-grid">
+                    <article class="ws-doctor-kpi-card">
+                        <p>{{ t('doctor.dash.kpi.total_cases') }}</p>
+                        <h3>{{ stats.total_cases }}</h3>
+                    </article>
+                    <article class="ws-doctor-kpi-card">
+                        <p>{{ t('doctor.dash.kpi.active_infection_rate') }}</p>
+                        <h3>{{ "%.1f"|format(stats.active_infection_rate) }}%</h3>
+                    </article>
+                    <article class="ws-doctor-kpi-card">
+                        <p>{{ t('doctor.dash.kpi.avg_ai_accuracy') }}</p>
+                        <h3>{{ "%.1f"|format(stats.avg_ai_accuracy) }}%</h3>
+                    </article>
+                    <article class="ws-doctor-kpi-card">
+                        <p>{{ t('doctor.dash.kpi.patients_under_care') }}</p>
+                        <h3>{{ stats.patients_under_care }}</h3>
+                    </article>
+                </div>
+            </section>
+
+            <section class="ws-doctor-section" id="patients-table">
+                <h2 class="ws-doctor-section__title">{{ t('doctor.dash.section.recent_analyses') }}</h2>
+                {% if recent_records %}
+                <div class="ws-doctor-table-card">
+                    <div class="table-wrap">
+                        <table class="ws-doctor-table">
+                            <thead>
+                                <tr>
+                                    <th>{{ t('doctor.dash.table.th.patient_name') }}</th>
+                                    <th>{{ t('doctor.dash.table.th.wound_image') }}</th>
+                                    <th>{{ t('doctor.dash.table.th.submission_date') }}</th>
+                                    <th>{{ t('doctor.dash.table.th.status') }}</th>
+                                    <th>{{ t('doctor.dash.table.th.confidence') }}</th>
+                                    <th>{{ t('doctor.dash.table.th.action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in recent_records %}
+                                <tr>
+                                    <td>{{ row.patient_name }}</td>
+                                    <td><img class="ws-doctor-thumb" src="{{ url_for('static', filename=row.original_path) }}" alt=""></td>
+                                    <td>{{ row.timestamp }}</td>
+                                    <td>
+                                        <span class="ws-patient-status-pill {% if row.prediction == 'infected' %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                            {% if row.prediction == 'infected' %}{{ t('doctor.prediction.infected') }}{% elif row.prediction == 'non-infected' %}{{ t('doctor.prediction.non_infected') }}{% else %}{{ row.prediction }}{% endif %}
+                                        </span>
+                                    </td>
+                                    <td>{{ "%.1f"|format(row.confidence * 100) }}%</td>
+                                    <td><a class="ws-nav__pill ws-nav__pill--ghost" href="{{ url_for('doctor_report', record_id=row.id) }}">{{ t('doctor.dash.table.action_view_report') }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="ws-patient-empty ws-patient-empty--card">
+                    <h3 class="ws-patient-empty__title">{{ t('doctor.dash.empty.title') }}</h3>
+                    <p>{{ t('doctor.dash.empty.text') }}</p>
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="ws-doctor-section">
+                <h2 class="ws-doctor-section__title">{{ t('doctor.dash.section.analytics') }}</h2>
+                <div class="ws-doctor-chart-grid">
+                    <article class="ws-doctor-chart-card">
+                        <h3>{{ t('doctor.dash.chart.infection_trends') }}</h3>
+                        {% if chart_data.infection_rate | select('ne', none) | list %}
+                        <div class="ws-doctor-bar-chart">
+                            {% for value in chart_data.infection_rate %}
+                            <div class="ws-doctor-bar-chart__item">
+                                <div class="ws-doctor-bar-chart__track">
+                                    <span class="ws-doctor-bar-chart__fill ws-doctor-bar-chart__fill--infection" style="height: {{ (value if value is not none else 0) }}%;"></span>
+                                </div>
+                                <span class="ws-doctor-bar-chart__label">{{ chart_data.labels[loop.index0] }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="muted">{{ t('doctor.dash.chart.not_enough_trend') }}</p>
+                        {% endif %}
+                    </article>
+                    <article class="ws-doctor-chart-card">
+                        <h3>{{ t('doctor.dash.chart.ai_performance') }}</h3>
+                        {% if chart_data.ai_accuracy | select('ne', none) | list %}
+                        <div class="ws-doctor-bar-chart">
+                            {% for value in chart_data.ai_accuracy %}
+                            <div class="ws-doctor-bar-chart__item">
+                                <div class="ws-doctor-bar-chart__track">
+                                    <span class="ws-doctor-bar-chart__fill ws-doctor-bar-chart__fill--accuracy" style="height: {{ (value if value is not none else 0) }}%;"></span>
+                                </div>
+                                <span class="ws-doctor-bar-chart__label">{{ chart_data.labels[loop.index0] }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="muted">{{ t('doctor.dash.chart.not_enough_performance') }}</p>
+                        {% endif %}
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {% include 'includes/doctor_footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

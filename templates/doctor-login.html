@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('auth.page_title.doctor_login') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-auth-page ws-auth-page--doctor">
+    <header class="ws-header">
+        <div class="ws-shell ws-auth-header__bar">
+            <a class="ws-brand ws-auth-header__brand" href="{{ url_for('index') }}">
+                <span class="ws-brand__mark" aria-hidden="true">
+                    <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                        <defs>
+                            <linearGradient id="wsBrandDoctorNavGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#22d3ee"/>
+                                <stop offset="50%" stop-color="#0ea5e9"/>
+                                <stop offset="100%" stop-color="#2563eb"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="11" fill="url(#wsBrandDoctorNavGrad)"/>
+                        <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                        <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                        <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                    </svg>
+                </span>
+                <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+            </a>
+            <nav class="ws-auth-header__center" aria-label="{{ t('nav.site_aria') }}">
+                <a class="ws-nav__pill ws-nav__pill--ghost" href="{{ url_for('index') }}">{{ t('nav.home') }}</a>
+            </nav>
+            <div class="ws-auth-header__spacer" aria-hidden="true"></div>
+        </div>
+    </header>
+
+    <main class="ws-main ws-auth-main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="ws-shell ws-flash-wrap" role="alert">
+                    {% for category, message in messages %}
+                        <p class="ws-flash ws-flash--{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="ws-auth-wrap">
+            <div class="ws-auth-layout">
+                <div class="card auth-card auth-card-doctor ws-auth-form-card">
+                    <h2 class="ws-auth-form-card__title">{{ t('auth.doctor_login.title') }}</h2>
+                    <p class="ws-auth-form-card__lead">{{ t('auth.doctor_login.lead') }}</p>
+                    <form action="{{ url_for('doctor_login') }}" method="POST">
+                        <div class="input-group ws-auth-form-card__field">
+                            <label for="doctorEmail">{{ t('auth.label.email') }}</label>
+                            <input id="doctorEmail" name="doctorEmail" type="email" autocomplete="email" required placeholder="{{ t('auth.placeholder.email_doctor_example') }}">
+                        </div>
+                        <div class="input-group ws-auth-form-card__field">
+                            <label for="doctorPassword">{{ t('auth.label.password') }}</label>
+                            <input id="doctorPassword" name="doctorPassword" type="password" autocomplete="current-password" required placeholder="{{ t('auth.placeholder.password_enter') }}">
+                        </div>
+                        <button class="ws-btn ws-btn--primary ws-auth-form-card__submit" type="submit">{{ t('auth.doctor_login.submit') }}</button>
+                    </form>
+                    <p class="helper ws-auth-form-card__helper">{{ t('auth.doctor_login.helper_prefix') }} <a href="/login">{{ t('nav.patient_login') }}</a></p>
+                </div>
+                <aside class="ws-auth-visual ws-auth-visual--doctor" aria-hidden="true">
+                    <div class="ws-auth-visual__frame">
+                        <img
+                            class="ws-auth-visual__image"
+                            src="{{ url_for('static', filename='images/doctor-login-side.png') }}"
+                            alt=""
+                            decoding="async"
+                            loading="eager"
+                        >
+                        <span class="ws-auth-visual__overlay"></span>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="ws-footer">
+        <div class="ws-shell ws-footer__grid">
+            <div class="ws-footer__brand">
+                <a class="ws-brand ws-brand--footer" href="{{ url_for('index') }}">
+                    <span class="ws-brand__mark" aria-hidden="true">
+                        <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                            <defs>
+                                <linearGradient id="wsBrandDoctorFooterGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#22d3ee"/>
+                                    <stop offset="50%" stop-color="#0ea5e9"/>
+                                    <stop offset="100%" stop-color="#2563eb"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="40" height="40" rx="11" fill="url(#wsBrandDoctorFooterGrad)"/>
+                            <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                            <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                            <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                        </svg>
+                    </span>
+                    <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+                </a>
+                <p class="ws-footer__tagline">{{ t('footer.tagline') }}</p>
+            </div>
+        </div>
+        <p class="ws-footer__copyright">{{ t('footer.copyright') }}</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

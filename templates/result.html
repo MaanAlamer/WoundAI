@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('result.page_title') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-patient-portal">
+    <div class="ws-patient-layout">
+        {% with sidebar_grad_id='wsResultSidebarGrad', patient_nav='result' %}
+        {% include 'includes/patient_sidebar.html' %}
+        {% endwith %}
+
+        <div class="ws-patient-main">
+            <header class="ws-patient-main__header">
+                <h1 class="ws-patient-main__title">{{ t('result.heading') }}</h1>
+                <p class="ws-patient-main__subtitle">{{ t('result.subtitle_record_prefix') }}{{ display_number | default(record.id) }} · {{ record.timestamp }}</p>
+            </header>
+
+            {% set is_infected = record.prediction == 'infected' %}
+
+            <section class="ws-patient-result-summary ws-fade-in-up">
+                <article class="ws-patient-result-summary__card">
+                    <span class="ws-patient-result-summary__label">{{ t('result.label.prediction_status') }}</span>
+                    <span class="ws-patient-status-pill ws-patient-status-pill--lg {% if is_infected %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                        {% if is_infected %}{{ t('result.status.infected_model') }}{% else %}{{ t('result.status.non_infected_model') }}{% endif %}
+                    </span>
+                </article>
+                <article class="ws-patient-result-summary__card">
+                    <span class="ws-patient-result-summary__label">{{ t('result.label.confidence_score') }}</span>
+                    <div class="ws-patient-confidence-row">
+                        <span class="ws-patient-confidence-row__value">{{ "%.1f"|format(record.confidence * 100) }}%</span>
+                    </div>
+                    <div class="ws-patient-confidence-track">
+                        <div class="ws-patient-confidence-track__fill {% if is_infected %}ws-patient-confidence-track__fill--alert{% else %}ws-patient-confidence-track__fill--ok{% endif %}" style="--confidence: {{ '%.1f'|format(record.confidence * 100) }}%;"></div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="ws-patient-result-grid ws-fade-in-up ws-fade-in-up--delay-1">
+                <article class="ws-patient-result-panel">
+                    <h2 class="ws-patient-result-panel__title">{{ t('result.panel.uploaded_image') }}</h2>
+                    <div class="ws-patient-result-panel__img-wrap">
+                        <img src="{{ url_for('static', filename=record.original_path) }}" alt="{{ t('result.panel.uploaded_image') }}">
+                    </div>
+                </article>
+                <article class="ws-patient-result-panel">
+                    <h2 class="ws-patient-result-panel__title">{{ t('result.panel.segmentation_overlay') }}</h2>
+                    <div class="ws-patient-result-panel__img-wrap">
+                        <img src="{{ url_for('static', filename=record.overlay_path) }}" alt="{{ t('result.alt.model_overlay') }}">
+                    </div>
+                </article>
+            </section>
+
+            <section class="ws-patient-result-insights ws-fade-in-up ws-fade-in-up--delay-2">
+                <article class="ws-patient-result-block ws-patient-result-block--card">
+                    <h3 class="ws-patient-result-block__title">{{ t('result.interpretation.heading') }}</h3>
+                    {% if is_infected %}
+                    <p>{{ t('result.interpretation.copy_inf') | safe }}</p>
+                    {% else %}
+                    <p>{{ t('result.interpretation.copy_noninf') | safe }}</p>
+                    {% endif %}
+                </article>
+
+                <article class="ws-patient-result-block ws-patient-result-block--card">
+                    <h3 class="ws-patient-result-block__title">{{ t('result.next_steps.heading') }}</h3>
+                    <ul class="ws-patient-result-list">
+                        <li>{{ t('result.next_steps.always') }}</li>
+                        {% if is_infected %}
+                        <li>{{ t('result.next_steps.inf1') }}</li>
+                        <li>{{ t('result.next_steps.inf2') }}</li>
+                        {% else %}
+                        <li>{{ t('result.next_steps.noninf1') }}</li>
+                        <li>{{ t('result.next_steps.noninf2') }}</li>
+                        {% endif %}
+                    </ul>
+                </article>
+            </section>
+
+            <section class="ws-patient-result-insights ws-fade-in-up ws-fade-in-up--delay-2">
+                <article class="ws-patient-result-block ws-patient-result-block--card ws-patient-doctor-review">
+                    <h3 class="ws-patient-result-block__title">{{ t('result.doctor_review.heading') }}</h3>
+                    {% if record.review_status %}
+                    {# Display-only translation of the fixed enum. The DB still
+                       stores the original English value (REVIEW_STATUS_OPTIONS
+                       in app.py is unchanged). Unknown values fall back to the
+                       raw value so nothing ever fails to render. #}
+                    {% if record.review_status == 'Stable' %}
+                        {% set review_status_display = t('result.doctor_review.status.stable') %}
+                    {% elif record.review_status == 'Needs Follow-up' %}
+                        {% set review_status_display = t('result.doctor_review.status.needs_followup') %}
+                    {% elif record.review_status == 'Urgent Review Recommended' %}
+                        {% set review_status_display = t('result.doctor_review.status.urgent') %}
+                    {% else %}
+                        {% set review_status_display = record.review_status %}
+                    {% endif %}
+                    <p><strong>{{ t('result.doctor_review.status_label') }}</strong> {{ review_status_display }}</p>
+                    <p><strong>{{ t('result.doctor_review.comment_label') }}</strong> {{ record.doctor_comment }}</p>
+                    <p><strong>{{ t('result.doctor_review.recommendation_label') }}</strong> {{ record.doctor_recommendation }}</p>
+                    <p><strong>{{ t('result.doctor_review.reviewed_by_label') }}</strong> {{ record.reviewed_by_name or t('result.doctor_review.doctor_fallback') }}</p>
+                    <p><strong>{{ t('result.doctor_review.reviewed_at_label') }}</strong> {{ record.reviewed_at }}</p>
+                    {% else %}
+                    <p>{{ t('result.doctor_review.pending') }}</p>
+                    {% endif %}
+                </article>
+            </section>
+
+            <article class="ws-patient-result-verdict ws-fade-in-up ws-fade-in-up--delay-3">
+                <p class="ws-patient-result-meta muted">{{ t('result.meta.file_label') }}{{ record.original_filename }}</p>
+                <div class="ws-patient-result-actions">
+                    <a href="{{ url_for('user_dashboard') }}" class="ws-btn ws-btn--teal-outline">{{ t('result.action.back_dashboard') }}</a>
+                    <a href="{{ url_for('history') }}" class="ws-btn ws-btn--teal-outline">{{ t('result.action.view_history') }}</a>
+                    <a href="{{ url_for('user_dashboard') }}#start-analysis" class="ws-btn ws-btn--primary">{{ t('dashboard.nav.start_analysis') }}</a>
+                    {% if patient_name %}
+                    <form action="{{ url_for('delete', record_id=record.id) }}" method="post" onsubmit="return confirm('{{ t('result.delete_confirm') }}')">
+                        <button type="submit" class="ws-btn ws-btn--danger-outline">{{ t('result.action.delete_record') }}</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </article>
+        </div>
+    </div>
+
+    {% include 'includes/patient_footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

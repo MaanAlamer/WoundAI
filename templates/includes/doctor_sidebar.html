@@ -1,0 +1,54 @@
+{# Doctor portal sidebar — expects doctor_name, doctor_nav, sidebar_grad_id #}
+<aside class="ws-doctor-sidebar" aria-label="{{ t('doctor.sidebar.aria') }}">
+    <a class="ws-doctor-sidebar__brand ws-brand" href="{{ url_for('index') }}">
+        <span class="ws-brand__mark" aria-hidden="true">
+            <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <defs>
+                    <linearGradient id="{{ sidebar_grad_id | default('wsDoctorSidebarGrad') }}" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#22d3ee"/>
+                        <stop offset="50%" stop-color="#0ea5e9"/>
+                        <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                </defs>
+                <rect width="40" height="40" rx="11" fill="url(#{{ sidebar_grad_id | default('wsDoctorSidebarGrad') }})"/>
+                <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+            </svg>
+        </span>
+        <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+    </a>
+
+    <div class="ws-doctor-sidebar__user">
+        <span class="ws-doctor-sidebar__avatar" aria-hidden="true">{{ (doctor_name[0] if doctor_name else 'D') | upper }}</span>
+        <div class="ws-doctor-sidebar__user-text">
+            <span class="ws-doctor-sidebar__user-label">{{ t('doctor.sidebar.role_label') }}</span>
+            <span class="ws-doctor-sidebar__name">{{ doctor_name }}</span>
+        </div>
+    </div>
+
+    <nav class="ws-doctor-sidebar__nav">
+        <a class="ws-doctor-nav-link {% if doctor_nav == 'dashboard' %}is-active{% endif %}" href="{{ url_for('doctor_dashboard') }}">
+            {{ t('doctor.nav.dashboard') }}
+        </a>
+        <a class="ws-doctor-nav-link {% if doctor_nav == 'patients' %}is-active{% endif %}" href="{{ url_for('doctor_dashboard') }}#patients-table">
+            {{ t('doctor.nav.patients') }}
+        </a>
+        <a class="ws-doctor-nav-link {% if doctor_nav == 'reports' or doctor_nav == 'report' %}is-active{% endif %}" href="{{ url_for('doctor_dashboard') }}#patients-table">
+            {{ t('doctor.nav.reports') }}
+        </a>
+    </nav>
+
+    <div class="ws-doctor-sidebar__bottom">
+        {# Language toggle (EN / AR) — same reusable include used elsewhere. #}
+        <div class="ws-sidebar-lang">
+            {% include 'includes/language_toggle.html' %}
+        </div>
+        <a class="ws-doctor-nav-link ws-doctor-nav-link--quiet" href="{{ url_for('doctor_logout') }}">
+            <span class="ws-doctor-nav-link__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18 9 12l6-6M4 12h10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ t('doctor.nav.logout') }}
+        </a>
+    </div>
+</aside>

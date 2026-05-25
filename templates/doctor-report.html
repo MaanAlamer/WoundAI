@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('doctor.report.page_title') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-doctor-portal">
+    <div class="ws-doctor-layout">
+        {% with sidebar_grad_id='wsDoctorReportSidebarGrad', doctor_nav='report' %}
+        {% include 'includes/doctor_sidebar.html' %}
+        {% endwith %}
+
+        <div class="ws-doctor-main">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="ws-flash-wrap" role="alert">
+                        {% for category, message in messages %}
+                            <p class="ws-flash ws-flash--{{ category }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <header class="ws-doctor-main__header">
+                <div>
+                    <h1 class="ws-doctor-main__title">{{ t('doctor.report.heading') }}</h1>
+                    <p class="ws-doctor-main__subtitle">{{ t('result.subtitle_record_prefix') }}{{ record.id }} · {{ record.timestamp }}</p>
+                </div>
+                <a class="ws-nav__pill ws-nav__pill--ghost" href="{{ url_for('doctor_dashboard') }}#patients-table">{{ t('doctor.report.back_dashboard') }}</a>
+            </header>
+
+            {% set is_infected = record.prediction == 'infected' %}
+
+            <section class="ws-doctor-section">
+                <div class="ws-doctor-report-top">
+                    <article class="ws-doctor-report-card">
+                        <h2>{{ t('doctor.report.card.patient') }}</h2>
+                        <p><strong>{{ t('doctor.report.label.name') }}</strong> {{ record.patient_name or t('doctor.report.unassigned_patient') }}</p>
+                        <p><strong>{{ t('doctor.report.label.email') }}</strong> {{ record.patient_email or t('doctor.report.na') }}</p>
+                        <p><strong>{{ t('doctor.report.label.submission_date') }}</strong> {{ record.timestamp }}</p>
+                    </article>
+                    <article class="ws-doctor-report-card">
+                        <h2>{{ t('doctor.report.card.model_result') }}</h2>
+                        <p><strong>{{ t('doctor.report.label.status') }}</strong>
+                            <span class="ws-patient-status-pill {% if is_infected %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                {% if record.prediction == 'infected' %}{{ t('doctor.prediction.infected') }}{% elif record.prediction == 'non-infected' %}{{ t('doctor.prediction.non_infected') }}{% else %}{{ record.prediction }}{% endif %}
+                            </span>
+                        </p>
+                        <p><strong>{{ t('doctor.report.label.confidence') }}</strong> {{ "%.1f"|format(record.confidence * 100) }}%</p>
+                        <p><strong>{{ t('doctor.report.label.infected_prob') }}</strong> {{ "%.1f"|format(record.infected_prob * 100) }}%</p>
+                        <p><strong>{{ t('doctor.report.label.non_infected_prob') }}</strong> {{ "%.1f"|format(record.non_infected_prob * 100) }}%</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="ws-doctor-section">
+                <h2 class="ws-doctor-section__title">{{ t('doctor.report.section.review') }}</h2>
+                <div class="ws-doctor-review-wrap">
+                    <article class="ws-doctor-review-card">
+                        <h3>{{ t('doctor.report.current_review.title') }}</h3>
+                        {% if record.review_status %}
+                        {% if record.review_status == 'Stable' %}
+                            {% set review_status_display = t('result.doctor_review.status.stable') %}
+                        {% elif record.review_status == 'Needs Follow-up' %}
+                            {% set review_status_display = t('result.doctor_review.status.needs_followup') %}
+                        {% elif record.review_status == 'Urgent Review Recommended' %}
+                            {% set review_status_display = t('result.doctor_review.status.urgent') %}
+                        {% else %}
+                            {% set review_status_display = record.review_status %}
+                        {% endif %}
+                        <p><strong>{{ t('result.doctor_review.status_label') }}</strong> {{ review_status_display }}</p>
+                        <p><strong>{{ t('result.doctor_review.comment_label') }}</strong> {{ record.doctor_comment }}</p>
+                        <p><strong>{{ t('result.doctor_review.recommendation_label') }}</strong> {{ record.doctor_recommendation }}</p>
+                        <p><strong>{{ t('result.doctor_review.reviewed_by_label') }}</strong> {{ record.reviewed_by_name or doctor_name }}</p>
+                        <p><strong>{{ t('result.doctor_review.reviewed_at_label') }}</strong> {{ record.reviewed_at }}</p>
+                        {% else %}
+                        <p class="muted">{{ t('doctor.report.current_review.none') }}</p>
+                        {% endif %}
+                    </article>
+
+                    <article class="ws-doctor-review-card">
+                        <h3>{{ t('doctor.report.form_card.title') }}</h3>
+                        <form action="{{ url_for('doctor_save_review', record_id=record.id) }}" method="POST" class="ws-doctor-review-form">
+                            <div class="input-group">
+                                <label for="review_status">{{ t('doctor.report.form.review_status') }}</label>
+                                <select id="review_status" name="review_status" required>
+                                    <option value="" disabled {% if not record.review_status %}selected{% endif %}>{{ t('doctor.report.form.select_status') }}</option>
+                                    {% for status in review_status_options %}
+                                    <option value="{{ status }}" {% if record.review_status == status %}selected{% endif %}>
+                                        {% if status == 'Stable' %}{{ t('result.doctor_review.status.stable') }}{% elif status == 'Needs Follow-up' %}{{ t('result.doctor_review.status.needs_followup') }}{% elif status == 'Urgent Review Recommended' %}{{ t('result.doctor_review.status.urgent') }}{% else %}{{ status }}{% endif %}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="doctor_comment">{{ t('doctor.report.form.clinical_comment') }}</label>
+                                <textarea id="doctor_comment" name="doctor_comment" rows="4" required placeholder="{{ t('doctor.report.form.placeholder.comment') }}">{{ record.doctor_comment or '' }}</textarea>
+                            </div>
+                            <div class="input-group">
+                                <label for="doctor_recommendation">{{ t('doctor.report.form.recommendation') }}</label>
+                                <textarea id="doctor_recommendation" name="doctor_recommendation" rows="4" required placeholder="{{ t('doctor.report.form.placeholder.recommendation') }}">{{ record.doctor_recommendation or '' }}</textarea>
+                            </div>
+                            <button type="submit" class="ws-btn ws-btn--primary">{{ t('doctor.report.form.submit') }}</button>
+                        </form>
+                    </article>
+                </div>
+            </section>
+
+            <section class="ws-doctor-section">
+                <div class="ws-patient-result-grid">
+                    <article class="ws-patient-result-panel">
+                        <h2 class="ws-patient-result-panel__title">{{ t('result.panel.uploaded_image') }}</h2>
+                        <div class="ws-patient-result-panel__img-wrap">
+                            <img src="{{ url_for('static', filename=record.original_path) }}" alt="{{ t('result.panel.uploaded_image') }}">
+                        </div>
+                    </article>
+                    <article class="ws-patient-result-panel">
+                        <h2 class="ws-patient-result-panel__title">{{ t('doctor.report.panel.segmentation_overlay') }}</h2>
+                        <div class="ws-patient-result-panel__img-wrap">
+                            <img src="{{ url_for('static', filename=record.overlay_path) }}" alt="{{ t('doctor.report.panel.segmentation_overlay') }}">
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="ws-doctor-section">
+                <article class="ws-patient-result-verdict">
+                    <div class="ws-patient-result-block">
+                        <h3 class="ws-patient-result-block__title">{{ t('doctor.report.interpretation.heading') }}</h3>
+                        {% if is_infected %}
+                        <p>{{ t('doctor.report.interpretation.copy_inf') }}</p>
+                        {% else %}
+                        <p>{{ t('doctor.report.interpretation.copy_noninf') }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="ws-patient-result-block">
+                        <h3 class="ws-patient-result-block__title">{{ t('doctor.report.next_steps.heading') }}</h3>
+                        <ul class="ws-patient-result-list">
+                            {% if is_infected %}
+                            <li>{{ t('doctor.report.next_steps.inf1') }}</li>
+                            <li>{{ t('doctor.report.next_steps.inf2') }}</li>
+                            <li>{{ t('doctor.report.next_steps.inf3') }}</li>
+                            {% else %}
+                            <li>{{ t('doctor.report.next_steps.noninf1') }}</li>
+                            <li>{{ t('doctor.report.next_steps.noninf2') }}</li>
+                            <li>{{ t('doctor.report.next_steps.noninf3') }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <section class="ws-doctor-section">
+                <h2 class="ws-doctor-section__title">{{ t('doctor.report.section.history') }}</h2>
+                {% if patient_history %}
+                <div class="ws-doctor-table-card">
+                    <div class="table-wrap">
+                        <table class="ws-doctor-table">
+                            <thead>
+                                <tr>
+                                    <th>{{ t('doctor.report.table.th.id') }}</th>
+                                    <th>{{ t('doctor.report.table.th.date') }}</th>
+                                    <th>{{ t('doctor.report.table.th.status') }}</th>
+                                    <th>{{ t('doctor.report.table.th.confidence') }}</th>
+                                    <th>{{ t('doctor.report.table.th.action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in patient_history %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.timestamp }}</td>
+                                    <td>
+                                        <span class="ws-patient-status-pill {% if item.prediction == 'infected' %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                            {% if item.prediction == 'infected' %}{{ t('doctor.prediction.infected') }}{% elif item.prediction == 'non-infected' %}{{ t('doctor.prediction.non_infected') }}{% else %}{{ item.prediction }}{% endif %}
+                                        </span>
+                                    </td>
+                                    <td>{{ "%.1f"|format(item.confidence * 100) }}%</td>
+                                    <td><a class="ws-nav__pill ws-nav__pill--ghost" href="{{ url_for('doctor_report', record_id=item.id) }}">{{ t('doctor.report.table.action_open') }}</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="ws-patient-empty">
+                    <p>{{ t('doctor.report.history.empty') }}</p>
+                </div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+
+    {% include 'includes/doctor_footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

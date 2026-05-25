@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('dashboard.page_title') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-patient-portal">
+    <div class="ws-patient-layout">
+        {% with sidebar_grad_id='wsDashSidebarGrad', patient_nav='dashboard' %}
+        {% include 'includes/patient_sidebar.html' %}
+        {% endwith %}
+
+        <div class="ws-patient-main">
+            <header class="ws-patient-main__header">
+                <h1 class="ws-patient-main__title">{{ t('dashboard.welcome_prefix') }}{{ patient_name }}!</h1>
+            </header>
+
+            <section class="ws-patient-section" id="start-analysis">
+                <h2 class="ws-patient-section__title">{{ t('dashboard.nav.start_analysis') }}</h2>
+                <div class="ws-patient-upload-card">
+                    <p class="ws-patient-upload-card__lead">{{ t('dashboard.upload.lead') }}</p>
+                    <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data" class="ws-patient-upload-form" data-patient-upload-form
+                          data-msg-unsupported="{{ t('dashboard.upload.msg_unsupported') }}"
+                          data-msg-selected="{{ t('dashboard.upload.msg_selected') }}"
+                          data-msg-choose-first="{{ t('dashboard.upload.msg_choose_first') }}"
+                          data-msg-analyzing="{{ t('dashboard.upload.progress_text') }}"
+                          data-msg-btn-analyzing="{{ t('dashboard.upload.btn_analyzing') }}">
+                        <label class="ws-patient-upload-dropzone" data-patient-upload-dropzone>
+                            <input type="file" name="file" accept=".jpg,.jpeg,.png,.bmp,.webp" required data-patient-upload-input>
+                            <span class="ws-patient-upload-dropzone__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                    <path d="M12 4.75v8.5m0-8.5 3.25 3.25M12 4.75 8.75 8M5.5 15.5v1.75A2.25 2.25 0 0 0 7.75 19.5h8.5a2.25 2.25 0 0 0 2.25-2.25V15.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="ws-patient-upload-dropzone__title">{{ t('dashboard.upload.dropzone_title') }}</span>
+                            <span class="ws-patient-upload-dropzone__hint">{{ t('dashboard.upload.dropzone_hint') }}</span>
+                        </label>
+                        <div class="ws-patient-upload-form__actions">
+                            <button type="submit" class="ws-btn ws-btn--primary ws-patient-upload-form__submit" data-patient-upload-submit>{{ t('dashboard.upload.submit') }}</button>
+                        </div>
+                    </form>
+                    <div class="ws-patient-upload-preview" data-patient-upload-preview hidden>
+                        <div class="ws-patient-upload-preview__img-wrap">
+                            <img src="" alt="{{ t('dashboard.upload.preview_alt') }}" data-patient-upload-preview-image>
+                            <span class="ws-patient-upload-preview__glass"></span>
+                        </div>
+                        <p class="ws-patient-upload-preview__name" data-patient-upload-preview-name></p>
+                    </div>
+                    <div class="ws-patient-upload-progress" data-patient-upload-progress hidden>
+                        <div class="ws-patient-upload-progress__bar" aria-hidden="true">
+                            <span class="ws-patient-upload-progress__fill"></span>
+                        </div>
+                        <p class="ws-patient-upload-progress__text">{{ t('dashboard.upload.progress_text') }}</p>
+                    </div>
+                    <p class="ws-patient-upload-feedback" data-patient-upload-feedback aria-live="polite"></p>
+                </div>
+            </section>
+
+            <section class="ws-patient-section">
+                <h2 class="ws-patient-section__title">{{ t('dashboard.recent.heading') }}</h2>
+                {% if patient_records %}
+                <div class="ws-patient-recent-grid">
+                    {% for r in patient_records[:3] %}
+                    {% set inf = r.prediction == 'infected' %}
+                    <article class="ws-patient-recent-card">
+                        <a href="{{ url_for('result', record_id=r.id) }}" class="ws-patient-recent-card__link">
+                            <div class="ws-patient-recent-card__thumb-wrap">
+                                <img class="ws-patient-recent-card__thumb" src="{{ url_for('static', filename=r.original_path) }}" alt="">
+                            </div>
+                            <div class="ws-patient-recent-card__meta">
+                                <span class="ws-patient-recent-card__date">{{ r.timestamp }}</span>
+                                <span class="ws-patient-status-pill {% if inf %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                    {% if inf %}{{ t('dashboard.status.infection_risk') }}{% else %}{{ t('dashboard.status.lower_risk') }}{% endif %}
+                                </span>
+                            </div>
+                            <p class="ws-patient-recent-card__conf">{{ t('dashboard.field.confidence_label') }}{{ "%.0f"|format(r.confidence * 100) }}%</p>
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="ws-patient-empty">
+                    <p>{{ t('dashboard.recent.empty') }}</p>
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="ws-patient-section">
+                <h2 class="ws-patient-section__title">{{ t('dashboard.summary.heading') }}</h2>
+                {% if patient_records %}
+                {% set latest = patient_records[0] %}
+                {% set is_inf = latest.prediction == 'infected' %}
+                <div class="ws-patient-summary-card">
+                    <div class="ws-patient-summary-card__top">
+                        <div>
+                            <span class="ws-patient-summary-card__label">{{ t('dashboard.summary.current_status_label') }}</span>
+                            <span class="ws-patient-status-pill {% if is_inf %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                {% if is_inf %}{{ t('dashboard.status.infection_flagged') }}{% else %}{{ t('dashboard.status.favoring_non_infected') }}{% endif %}
+                            </span>
+                        </div>
+                        <p class="ws-patient-summary-card__when">{{ t('dashboard.summary.last_analysis_label') }}{{ latest.timestamp }}</p>
+                    </div>
+                    <div class="ws-patient-summary-card__body">
+                        <div class="ws-patient-confidence-ring" style="--p: {{ latest.confidence }};">
+                            <div class="ws-patient-confidence-ring__inner">
+                                <span class="ws-patient-confidence-ring__value">{{ "%.0f"|format(latest.confidence * 100) }}%</span>
+                                <span class="ws-patient-confidence-ring__sub">{{ t('dashboard.summary.confidence_sub') }}</span>
+                            </div>
+                        </div>
+                        <div class="ws-patient-summary-card__copy">
+                            {% if is_inf %}
+                            <p>{{ t('dashboard.summary.copy_inf') | safe }}</p>
+                            {% else %}
+                            <p>{{ t('dashboard.summary.copy_noninf') | safe }}</p>
+                            {% endif %}
+                            <a href="{{ url_for('result', record_id=latest.id) }}" class="ws-link">{{ t('dashboard.summary.view_full_result_prefix') }}{{ latest.display_number | default(latest.id) }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="ws-patient-empty ws-patient-empty--soft">
+                    <p>{{ t('dashboard.summary.empty') }}</p>
+                </div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+
+    {% include 'includes/patient_footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

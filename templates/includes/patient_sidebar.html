@@ -1,0 +1,75 @@
+{# Patient portal sidebar — WoundSense design system. Expects: patient_nav, patient_name (optional for minimal/result guest) #}
+<aside class="ws-patient-sidebar" aria-label="{{ t('dashboard.sidebar.aria') }}">
+    <a class="ws-patient-sidebar__brand ws-brand" href="{{ url_for('index') }}">
+        <span class="ws-brand__mark" aria-hidden="true">
+            <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <defs>
+                    <linearGradient id="{{ sidebar_grad_id | default('wsPatientSidebarGrad') }}" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#22d3ee"/>
+                        <stop offset="50%" stop-color="#0ea5e9"/>
+                        <stop offset="100%" stop-color="#2563eb"/>
+                    </linearGradient>
+                </defs>
+                <rect width="40" height="40" rx="11" fill="url(#{{ sidebar_grad_id | default('wsPatientSidebarGrad') }})"/>
+                <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+            </svg>
+        </span>
+        <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+    </a>
+
+    {% if patient_name %}
+    <div class="ws-patient-sidebar__user">
+        <span class="ws-patient-sidebar__avatar" aria-hidden="true">{{ (patient_name[0] if patient_name else '?') | upper }}</span>
+        <div class="ws-patient-sidebar__user-text">
+            <span class="ws-patient-sidebar__user-label">{{ t('dashboard.sidebar.signed_in') }}</span>
+            <span class="ws-patient-sidebar__name">{{ patient_name }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <nav class="ws-patient-sidebar__nav">
+        {% if patient_name %}
+        <a class="ws-patient-nav-link {% if patient_nav == 'dashboard' %}is-active{% endif %}" href="{{ url_for('user_dashboard') }}">
+            <span class="ws-patient-nav-link__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-8.5Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ t('dashboard.nav.dashboard') }}
+        </a>
+        <a class="ws-patient-nav-link" href="{{ url_for('user_dashboard') }}#start-analysis">
+            <span class="ws-patient-nav-link__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 16V4m0 0 3.25 3.25M12 4 8.75 7.25M5 15h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ t('dashboard.nav.start_analysis') }}
+        </a>
+        <a class="ws-patient-nav-link {% if patient_nav == 'history' or patient_nav == 'result' %}is-active{% endif %}" href="{{ url_for('history') }}">
+            <span class="ws-patient-nav-link__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="8.25"/><path d="M12 8.25V12l3 1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ t('dashboard.nav.history') }}
+        </a>
+        {% else %}
+        <a class="ws-patient-nav-link" href="{{ url_for('index') }}">{{ t('nav.home') }}</a>
+        <a class="ws-patient-nav-link" href="{{ url_for('login') }}">{{ t('nav.patient_login') }}</a>
+        {% endif %}
+    </nav>
+
+    <div class="ws-patient-sidebar__bottom">
+        {# Language toggle (EN / AR) — uses the existing reusable include.
+           Always rendered so visitors can switch language even before login
+           (e.g. on a shared /result/<id> link). No layout, route, auth, or
+           data behavior is affected. #}
+        <div class="ws-sidebar-lang">
+            {% include 'includes/language_toggle.html' %}
+        </div>
+        {% if patient_name %}
+        <a class="ws-patient-nav-link ws-patient-nav-link--quiet" href="{{ url_for('patient_logout') }}">
+            <span class="ws-patient-nav-link__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18 9 12l6-6M4 12h10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ t('dashboard.nav.logout') }}
+        </a>
+        {% endif %}
+    </div>
+</aside>

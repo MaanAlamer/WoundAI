@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('history.page_title') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public ws-patient-portal">
+    <div class="ws-patient-layout">
+        {% with sidebar_grad_id='wsHistSidebarGrad', patient_nav='history' %}
+        {% include 'includes/patient_sidebar.html' %}
+        {% endwith %}
+
+        <div class="ws-patient-main">
+            <header class="ws-patient-main__header">
+                <h1 class="ws-patient-main__title">{{ t('history.heading') }}</h1>
+                <p class="ws-patient-main__subtitle">{{ t('history.subtitle') }}</p>
+            </header>
+
+            {% if records %}
+            {% set total = records | length %}
+            {% set infected = records | selectattr('prediction', 'equalto', 'infected') | list | length %}
+            {% set noninf = total - infected %}
+            <div class="ws-patient-history-toolbar">
+                <div class="ws-patient-stats-inline">
+                    <span class="ws-patient-stat-chip">{{ t('history.stats.total') }} <strong>{{ total }}</strong></span>
+                    <span class="ws-patient-stat-chip">{{ t('history.stats.flagged') }} <strong class="ws-patient-stat-chip--alert">{{ infected }}</strong></span>
+                    <span class="ws-patient-stat-chip">{{ t('history.stats.non_infected_lean') }} <strong class="ws-patient-stat-chip--ok">{{ noninf }}</strong></span>
+                </div>
+                <label class="ws-patient-filter">
+                    <span class="ws-patient-filter__label">{{ t('history.filter.label') }}</span>
+                    <input type="search" id="history-filter" class="ws-patient-filter__input" placeholder="{{ t('history.filter.placeholder') }}" autocomplete="off">
+                </label>
+            </div>
+
+            <div class="ws-patient-table-card">
+                <div class="table-wrap">
+                    <table class="ws-patient-table">
+                        <thead>
+                            <tr>
+                                <th>{{ t('history.table.number') }}</th>
+                                <th>{{ t('history.table.original') }}</th>
+                                <th>{{ t('history.table.overlay') }}</th>
+                                <th>{{ t('history.table.file') }}</th>
+                                <th>{{ t('history.table.status') }}</th>
+                                <th>{{ t('history.table.confidence') }}</th>
+                                <th>{{ t('history.table.date') }}</th>
+                                <th>{{ t('history.table.actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for r in records %}
+                            {# `display_number` is the patient-facing UI number
+                               (newest = #1, oldest = #N). r.id remains the
+                               canonical DB identifier used in /result/<id>,
+                               /delete/<id>, and the data-row key — unchanged. #}
+                            {% set patient_num = r.display_number | default(r.id) %}
+                            <tr class="ws-patient-table__row" data-history-row data-search="{{ (patient_num ~ ' ' ~ r.original_filename ~ ' ' ~ r.prediction ~ ' ' ~ r.timestamp)|lower|e }}">
+                                <td>#{{ patient_num }}</td>
+                                <td><img class="ws-patient-thumb" src="{{ url_for('static', filename=r.original_path) }}" alt=""></td>
+                                <td><img class="ws-patient-thumb" src="{{ url_for('static', filename=r.overlay_path) }}" alt=""></td>
+                                <td class="truncate" title="{{ r.original_filename }}">{{ r.original_filename }}</td>
+                                <td>
+                                    <span class="ws-patient-status-pill {% if r.prediction == 'infected' %}ws-patient-status-pill--alert{% else %}ws-patient-status-pill--ok{% endif %}">
+                                        {% if r.prediction == 'infected' %}{{ t('history.status.infected') }}{% else %}{{ t('history.status.non_infected') }}{% endif %}
+                                    </span>
+                                </td>
+                                <td>{{ "%.1f"|format(r.confidence * 100) }}%</td>
+                                <td class="muted">{{ r.timestamp }}</td>
+                                <td>
+                                    <div class="ws-patient-actions">
+                                        <a href="{{ url_for('result', record_id=r.id) }}" class="ws-nav__pill ws-nav__pill--ghost ws-patient-actions__btn">{{ t('history.action.view') }}</a>
+                                        <form action="{{ url_for('delete', record_id=r.id) }}" method="post" class="ws-patient-actions__form" onsubmit="return confirm('{{ t('history.delete_confirm_prefix') }}{{ patient_num }}{{ t('history.delete_confirm_suffix') }}')">
+                                            <button type="submit" class="ws-nav__pill ws-nav__pill--ghost ws-patient-actions__del">{{ t('history.action.delete') }}</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="ws-patient-empty ws-patient-empty--card">
+                <h2 class="ws-patient-empty__title">{{ t('history.empty.title') }}</h2>
+                <p>{{ t('history.empty.copy') }}</p>
+                <a href="{{ url_for('user_dashboard') }}" class="ws-btn ws-btn--primary">{{ t('history.empty.action') }}</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'includes/patient_footer.html' %}
+    <script>
+        (function () {
+            var input = document.getElementById('history-filter');
+            if (!input) return;
+            input.addEventListener('input', function () {
+                var q = (input.value || '').toLowerCase().trim();
+                document.querySelectorAll('[data-history-row]').forEach(function (row) {
+                    var hay = row.getAttribute('data-search') || '';
+                    row.style.display = !q || hay.indexOf(q) !== -1 ? '' : 'none';
+                });
+            });
+        })();
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

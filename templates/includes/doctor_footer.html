@@ -1,0 +1,26 @@
+<footer class="ws-footer ws-doctor-portal__footer">
+    <div class="ws-shell ws-footer__grid">
+        <div class="ws-footer__brand">
+            <a class="ws-brand ws-brand--footer" href="{{ url_for('index') }}">
+                <span class="ws-brand__mark" aria-hidden="true">
+                    <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                        <defs>
+                            <linearGradient id="wsBrandDoctorPortalFooterGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#22d3ee"/>
+                                <stop offset="50%" stop-color="#0ea5e9"/>
+                                <stop offset="100%" stop-color="#2563eb"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="11" fill="url(#wsBrandDoctorPortalFooterGrad)"/>
+                        <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                        <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                        <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                    </svg>
+                </span>
+                <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+            </a>
+            <p class="ws-footer__tagline">{{ t('doctor.footer.tagline') }}</p>
+        </div>
+    </div>
+    <p class="ws-footer__copyright">{{ t('footer.copyright') }}</p>
+</footer>

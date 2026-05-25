@@ -1,0 +1,32 @@
+{# ============================================================
+   LANGUAGE TOGGLE  (EN / AR)  — REUSABLE INCLUDE
+   ------------------------------------------------------------
+   Drop this anywhere in any template to render a small EN / AR
+   switcher:
+
+       {% include 'includes/language_toggle.html' %}
+
+   It reads `current_lang`, `supported_languages`, and
+   `language_labels` from the global context processor wired in
+   app.py. Switching is a simple GET to /set-language/<code>,
+   which stores the choice in the session and redirects back.
+
+   No translation strings are used here — only the language
+   labels themselves, which are intentionally hard-coded
+   ("EN" and "العربية") so the toggle works even before any
+   page strings are translated.
+   ============================================================ #}
+{# Build a same-origin "next" hint that points back to the current page so
+   /set-language/<code> can return the user where they were (preserving any
+   query string). This is server-validated in app.py: only relative paths
+   ("/...") or absolute URLs on this host are honored. #}
+{% set _ws_next = (request.full_path if request.query_string else request.path) %}
+<div class="ws-lang-toggle" role="group" aria-label="{{ t('nav.language_aria') }}">
+    {% for code in supported_languages %}
+        <a class="ws-lang-toggle__btn{% if current_lang == code %} is-active{% endif %}"
+           href="{{ url_for('set_language', lang_code=code, next=_ws_next) }}"
+           lang="{{ code }}"
+           aria-pressed="{{ 'true' if current_lang == code else 'false' }}"
+           rel="nofollow">{{ language_labels.get(code, code) }}</a>
+    {% endfor %}
+</div>

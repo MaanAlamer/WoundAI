@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | WoundSense AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar container">
+        <a class="brand" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WoundSense AI logo">
+            <span>WoundSense AI</span>
+        </a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle menu">Menu</button>
+        <div class="nav-links" data-nav-menu>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a class="active-link" href="/about">About</a>
+            <a href="{{ url_for('index') }}#how-it-works">How It Works</a>
+            <a href="/contact">Contact</a>
+            <a href="/login">Patient Login</a>
+            <a href="/signup">Patient Sign Up</a>
+            <a href="/doctor-login">Doctor Login</a>
+        </div>
+    </nav>
+</header>
+
+<main class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>About WoundSense AI</h2>
+            <p>A modern clinical AI platform for wound analysis, triage support, and follow-up review.</p>
+        </div>
+
+        <div class="card feature-card">
+            <h3>Our Mission</h3>
+            <p>
+                WoundSense AI helps care teams evaluate wound images with consistent visual outputs.
+                The platform combines segmentation overlays and confidence-based classification
+                to support triage workflows and trend-based monitoring.
+            </p>
+        </div>
+
+        <div class="grid-3 mt-1">
+            <article class="card feature-card">
+                <h3>Clinical Support</h3>
+                <p>Highlights wound boundaries and provides infection likelihood in seconds.</p>
+            </article>
+            <article class="card feature-card">
+                <h3>Care Continuity</h3>
+                <p>Keeps historical records to compare healing progress over time.</p>
+            </article>
+            <article class="card feature-card">
+                <h3>Responsible Use</h3>
+                <p>Designed as a support tool, not a substitute for physician diagnosis.</p>
+            </article>
+        </div>
+    </div>
+</main>
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <h4>WoundSense AI</h4>
+            <p>Medical decision support interface for image-based wound assessment.</p>
+        </div>
+        <div class="footer-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="/about">About</a>
+            <a href="{{ url_for('index') }}#how-it-works">How It Works</a>
+            <a href="/contact">Contact</a>
+            <a href="/login">Patient Login</a>
+            <a href="/signup">Patient Sign Up</a>
+            <a href="/doctor-login">Doctor Login</a>
+        </div>
+    </div>
+</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

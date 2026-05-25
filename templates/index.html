@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" dir="{{ text_direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoundSense AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="theme-color" content="#0ea5e9">
+</head>
+<body class="ws-public">
+    {# ============================================================
+       SPLASH SCREEN / OPENING ANIMATION  (REMOVABLE BLOCK)
+       ------------------------------------------------------------
+       Self-contained opening logo animation shown on first visit.
+       To remove the animation completely, delete:
+         1. This entire block (down to the matching END marker).
+         2. The "splash animation" section in static/css/style.css.
+         3. The "splash animation logic" section in static/js/main.js.
+       Removing these does NOT affect layout, auth, ML, /predict,
+       or any patient/doctor logic.
+       ============================================================ #}
+    <div id="ws-splash" class="ws-splash" role="presentation" aria-hidden="true">
+        <div class="ws-splash__inner">
+            <div class="ws-splash__mark">
+                <svg class="ws-splash__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="wsSplashGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#22d3ee"/>
+                            <stop offset="50%" stop-color="#0ea5e9"/>
+                            <stop offset="100%" stop-color="#2563eb"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="40" height="40" rx="11" fill="url(#wsSplashGrad)"/>
+                    <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                    <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                    <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                </svg>
+            </div>
+            <div class="ws-splash__wordmark">WoundSense <span class="ws-splash__wordmark-ai">AI</span></div>
+            <div class="ws-splash__tagline">{{ t('splash.tagline') }}</div>
+        </div>
+    </div>
+    {# ============================================================
+       END SPLASH SCREEN / OPENING ANIMATION
+       ============================================================ #}
+
+    <header class="ws-header">
+        <div class="ws-shell ws-header__bar">
+            <a class="ws-brand" href="{{ url_for('index') }}">
+                <span class="ws-brand__mark" aria-hidden="true">
+                    <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                        <defs>
+                            <linearGradient id="wsBrandNavGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#22d3ee"/>
+                                <stop offset="50%" stop-color="#0ea5e9"/>
+                                <stop offset="100%" stop-color="#2563eb"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="11" fill="url(#wsBrandNavGrad)"/>
+                        <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                        <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                        <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                    </svg>
+                </span>
+                <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+            </a>
+            <button type="button" class="menu-toggle ws-menu-toggle" data-menu-toggle aria-label="{{ t('nav.menu_open_aria') }}">{{ t('nav.menu_button') }}</button>
+            <nav class="ws-nav__drawer" data-nav-menu aria-label="{{ t('nav.account_aria') }}">
+                {# Language toggle (EN/AR). Step 1: included only on the homepage. #}
+                {% include 'includes/language_toggle.html' %}
+                <a class="ws-nav__pill ws-nav__pill--ghost" href="/login">{{ t('nav.patient_login') }}</a>
+                <a class="ws-nav__pill ws-nav__pill--primary" href="/signup">{{ t('nav.patient_signup') }}</a>
+                <a class="ws-nav__pill ws-nav__pill--teal" href="/doctor-login">{{ t('nav.doctor_login') }}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="ws-main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="ws-shell ws-flash-wrap" role="alert">
+                    {% for category, message in messages %}
+                        <p class="ws-flash ws-flash--{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="ws-hero">
+            <div class="ws-shell ws-hero__grid">
+                <div class="ws-hero__copy">
+                    <h1 class="ws-hero__title">{{ t('home.hero.title') }}</h1>
+                    <p class="ws-hero__lead">
+                        {{ t('home.hero.lead') }}
+                    </p>
+                    <div class="ws-hero__actions">
+                        <a class="ws-btn ws-btn--primary" href="/login">{{ t('nav.patient_login') }}</a>
+                        <a class="ws-btn ws-btn--teal-outline" href="/doctor-login">{{ t('nav.doctor_login') }}</a>
+                    </div>
+                    <p class="ws-hero__meta">
+                        <a class="ws-link" href="#about">{{ t('home.hero.learn_link') }}</a>
+                    </p>
+                </div>
+                <div class="ws-hero__art" aria-hidden="true">
+                    <div class="ws-hero-visual">
+                        <img
+                            class="ws-hero-visual__image"
+                            src="{{ url_for('static', filename='images/hero-medical-ai.png') }}"
+                            alt=""
+                            decoding="async"
+                            loading="eager"
+                        >
+                        <span class="ws-hero-visual__overlay"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ws-works" aria-labelledby="ws-works-heading">
+            <div class="ws-shell">
+                <h2 class="ws-section__title" id="ws-works-heading">{{ t('home.works.heading') }}</h2>
+                <div class="ws-works__grid">
+                    <article class="ws-info-card">
+                        <div class="ws-info-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M12 5.5v8.5m0 0l3.25-3.25M12 14L8.75 10.75M5 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.5 15v1.75A2.5 2.5 0 008 19.25h8a2.5 2.5 0 002.5-2.5V15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="ws-info-card__title">{{ t('home.works.card1.title') }}</h3>
+                        <p class="ws-info-card__text">{{ t('home.works.card1.text') }}</p>
+                    </article>
+                    <article class="ws-info-card">
+                        <div class="ws-info-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M7 4h10a2 2 0 012 2v2H5V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5 10h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="15" r="2.25" stroke="currentColor" stroke-width="1.75"/>
+                            </svg>
+                        </div>
+                        <h3 class="ws-info-card__title">{{ t('home.works.card2.title') }}</h3>
+                        <p class="ws-info-card__text">{{ t('home.works.card2.text') }}</p>
+                    </article>
+                    <article class="ws-info-card">
+                        <div class="ws-info-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.75"/>
+                                <path d="M12 8.25V12l3 1.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="ws-info-card__title">{{ t('home.works.card3.title') }}</h3>
+                        <p class="ws-info-card__text">{{ t('home.works.card3.text') }}</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="ws-empower" aria-labelledby="ws-empower-heading">
+            <div class="ws-shell">
+                <h2 class="ws-section__title" id="ws-empower-heading">{{ t('home.empower.heading') }}</h2>
+                <div class="ws-empower__grid">
+                    <article class="ws-audience-card">
+                        <div class="ws-audience-card__head">
+                            <div class="ws-info-card__icon ws-info-card__icon--sm" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                    <circle cx="12" cy="8.5" r="3" stroke="currentColor" stroke-width="1.75"/>
+                                    <path d="M5.5 19.5v-.5a6.5 6.5 0 0113 0v.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h3 class="ws-audience-card__title">{{ t('home.empower.patients.title') }}</h3>
+                        </div>
+                        <ul class="ws-audience-card__list">
+                            <li>{{ t('home.empower.patients.item1') }}</li>
+                            <li>{{ t('home.empower.patients.item2') }}</li>
+                            <li>{{ t('home.empower.patients.item3') }}</li>
+                            <li>{{ t('home.empower.patients.item4') }}</li>
+                        </ul>
+                    </article>
+                    <article class="ws-audience-card">
+                        <div class="ws-audience-card__head">
+                            <div class="ws-info-card__icon ws-info-card__icon--sm" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                    <!-- Medical clipboard: chart + cross (clinical / physician cue) -->
+                                    <path d="M10.25 3.25h3.5a.75.75 0 01.75.75V6.25h1.65a1.45 1.45 0 011.45 1.45v10.1a1.7 1.7 0 01-1.7 1.7H8.6a1.7 1.7 0 01-1.7-1.7V7.7a1.45 1.45 0 011.45-1.45h1.65V4a.75.75 0 01.75-.75z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+                                    <path d="M12 9v5.5M9.25 11.75h5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h3 class="ws-audience-card__title">{{ t('home.empower.doctors.title') }}</h3>
+                        </div>
+                        <ul class="ws-audience-card__list">
+                            <li>{{ t('home.empower.doctors.item1') }}</li>
+                            <li>{{ t('home.empower.doctors.item2') }}</li>
+                            <li>{{ t('home.empower.doctors.item3') }}</li>
+                            <li>{{ t('home.empower.doctors.item4') }}</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="ws-about" id="about">
+            <div class="ws-shell">
+                <h2 class="ws-about__title">{{ t('home.about.heading') }}</h2>
+                <p class="ws-about__text">
+                    {{ t('home.about.text') }}
+                </p>
+                <ul class="ws-features">
+                    <li class="ws-features__item">
+                        <span class="ws-features__badge" aria-hidden="true"></span>
+                        <span>{{ t('home.about.feature1') }}</span>
+                    </li>
+                    <li class="ws-features__item">
+                        <span class="ws-features__badge" aria-hidden="true"></span>
+                        <span>{{ t('home.about.feature2') }}</span>
+                    </li>
+                    <li class="ws-features__item">
+                        <span class="ws-features__badge" aria-hidden="true"></span>
+                        <span>{{ t('home.about.feature3') }}</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="ws-footer">
+        <div class="ws-shell ws-footer__grid">
+            <div class="ws-footer__brand">
+                <a class="ws-brand ws-brand--footer" href="{{ url_for('index') }}">
+                    <span class="ws-brand__mark" aria-hidden="true">
+                        <svg class="ws-brand__svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                            <defs>
+                                <linearGradient id="wsBrandFooterGrad" x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#22d3ee"/>
+                                    <stop offset="50%" stop-color="#0ea5e9"/>
+                                    <stop offset="100%" stop-color="#2563eb"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="40" height="40" rx="11" fill="url(#wsBrandFooterGrad)"/>
+                            <path d="M20 10v20M10 20h20" stroke="#ffffff" stroke-width="2.75" stroke-linecap="round"/>
+                            <circle cx="31" cy="9" r="3.25" fill="#ecfeff" opacity="0.92"/>
+                            <circle cx="31" cy="9" r="1.35" fill="#0369a1"/>
+                        </svg>
+                    </span>
+                    <span class="ws-brand__wordmark">WoundSense <span class="ws-brand__wordmark-ai">AI</span></span>
+                </a>
+                <p class="ws-footer__tagline">{{ t('footer.tagline') }}</p>
+            </div>
+        </div>
+        <p class="ws-footer__copyright">{{ t('footer.copyright') }}</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

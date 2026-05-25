@@ -1,0 +1,3651 @@
+﻿*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-soft: #f4f9ff;
+    --text: #0f172a;
+    --muted: #475569;
+    --line: #e2e8f0;
+    --primary: #1e3a8a;
+    --primary-dark: #172f70;
+    --teal: #14b8a6;
+    --cyan: #0ea5e9;
+    --danger: #ce3d3d;
+    --success: #1f9b6f;
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --shadow: 0 12px 35px rgba(20, 48, 73, 0.08);
+    --shadow-soft: 0 8px 18px rgba(18, 56, 84, 0.08);
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.55;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1150px, 92%);
+    margin: 0 auto;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+}
+
+.navbar {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.12rem;
+    font-weight: 700;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    font-weight: 600;
+    color: var(--muted);
+    padding: 0.28rem 0.45rem;
+    border-radius: 8px;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+    background: #edf6ff;
+}
+
+.nav-links .active-link {
+    color: var(--primary-dark);
+    background: #e9f3ff;
+}
+
+.menu-toggle {
+    display: none;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 0.5rem 0.85rem;
+    cursor: pointer;
+}
+
+.hero {
+    padding: 4.6rem 0 2.4rem;
+    background: linear-gradient(130deg, #f8fcff 0%, #eef6ff 42%, #edfdfa 100%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    color: var(--primary-dark);
+    background: #e8f2ff;
+    font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+h1 {
+    margin-top: 0.85rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+}
+
+.lead {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    max-width: 700px;
+}
+
+.actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+
+.section {
+    padding: 2.2rem 0;
+}
+
+.section-tint {
+    background: linear-gradient(180deg, #f6faff 0%, #f3fdfa 100%);
+}
+
+.section-head {
+    margin-bottom: 1rem;
+}
+
+.section-head p {
+    margin-top: 0.3rem;
+    color: var(--muted);
+}
+
+.row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.split-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-soft);
+}
+
+.feature-card {
+    padding: 1.3rem;
+}
+
+.feature-card p {
+    color: var(--muted);
+    margin-top: 0.35rem;
+}
+
+.clean-list {
+    margin: 0.65rem 0 0;
+    padding-left: 1rem;
+    color: var(--muted);
+}
+
+.clean-list li {
+    margin: 0.45rem 0;
+}
+
+.metric-card {
+    padding: 1.2rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.metric-card h3 {
+    margin-bottom: 0.7rem;
+}
+
+.metric-row {
+    padding: 0.55rem 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px dashed var(--line);
+    color: var(--muted);
+}
+
+.metric-row:last-child {
+    border-bottom: none;
+}
+
+.upload-card {
+    max-width: 730px;
+    margin: 0 auto;
+    padding: 1.3rem;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfeff 100%);
+}
+
+.cta-card {
+    padding: 1.6rem;
+    text-align: center;
+    background: linear-gradient(120deg, #eef4ff 0%, #f3fdfb 100%);
+}
+
+.cta-card p {
+    color: var(--muted);
+    margin-top: 0.45rem;
+}
+
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    border: 2px dashed #9dc6f4;
+    border-radius: 18px;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--surface-soft);
+    position: relative;
+}
+
+.drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.drop-zone.drag-over {
+    border-color: var(--teal);
+    background: #ebfcfd;
+}
+
+.drop-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.drop-subtitle,
+.drop-zone small {
+    color: var(--muted);
+}
+
+.preview-wrap {
+    display: none;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.preview-wrap img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-soft);
+}
+
+.preview-wrap p {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 0.72rem 1.2rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.btn-sm {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.84rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-soft {
+    background: #edf6ff;
+    color: var(--primary-dark);
+}
+
+.btn-soft:hover {
+    background: #dceeff;
+}
+
+.btn:focus-visible,
+.input-group input:focus-visible,
+.input-group select:focus-visible,
+.input-group textarea:focus-visible {
+    outline: 3px solid rgba(29, 116, 214, 0.2);
+    outline-offset: 1px;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    filter: brightness(0.95);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: left;
+    font-size: 0.82rem;
+    color: #33536e;
+    background: #eef6fd;
+    padding: 0.8rem 0.95rem;
+    white-space: nowrap;
+}
+
+tbody td {
+    padding: 0.8rem 0.95rem;
+    border-top: 1px solid #edf2f7;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #f9fcff;
+}
+
+.thumb {
+    width: 58px;
+    height: 58px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.pill {
+    display: inline-flex;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.pill-infected {
+    background: #ffeceb;
+    color: var(--danger);
+}
+
+.pill-noninfected {
+    background: #e8faef;
+    color: var(--success);
+}
+
+.flash-list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+}
+
+.flash-list li {
+    padding: 0.72rem 0.9rem;
+    border-radius: 10px;
+    margin-bottom: 0.45rem;
+    font-weight: 600;
+}
+
+.flash-error {
+    color: var(--danger);
+    background: #ffefef;
+    border: 1px solid #ffcfcf;
+}
+
+.flash-success {
+    color: var(--success);
+    background: #ebfdf4;
+    border: 1px solid #caefd9;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.image-card {
+    padding: 1rem;
+}
+
+.image-card h3 {
+    margin-bottom: 0.65rem;
+}
+
+.image-card img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--surface-soft);
+}
+
+.verdict-card {
+    padding: 1.4rem;
+    text-align: center;
+}
+
+.verdict-badge {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 0.55rem 1.45rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.badge-infected {
+    background: #ffeceb;
+    color: var(--danger);
+}
+
+.badge-noninfected {
+    background: #e8faef;
+    color: var(--success);
+}
+
+.confidence-bar-wrap {
+    max-width: 560px;
+    margin: 0 auto 1rem;
+}
+
+.confidence-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.confidence-track {
+    height: 11px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e3ebf2;
+}
+
+.confidence-fill {
+    height: 100%;
+}
+
+.fill-infected {
+    background: var(--danger);
+}
+
+.fill-noninfected {
+    background: var(--success);
+}
+
+.prob-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+}
+
+.prob-box {
+    border-radius: 13px;
+    padding: 0.95rem;
+}
+
+.prob-box-inf {
+    background: #ffeceb;
+}
+
+.prob-box-noninf {
+    background: #e8faef;
+}
+
+.prob-label {
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.prob-value {
+    margin-top: 0.2rem;
+    font-size: 1.26rem;
+    font-weight: 800;
+}
+
+.prob-inf-val {
+    color: var(--danger);
+}
+
+.prob-noninf-val {
+    color: var(--success);
+}
+
+.meta-row {
+    margin-top: 0.8rem;
+    color: var(--muted);
+}
+
+.action-row {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.stats-bar {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.stat-chip {
+    padding: 0.72rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.stat-chip span {
+    color: var(--muted);
+    font-size: 0.87rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+}
+
+.empty-state p {
+    color: var(--muted);
+    margin: 0.55rem 0 1rem;
+}
+
+.panel-section {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 0;
+}
+
+.panel-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 1rem;
+}
+
+.sidebar {
+    padding: 1rem;
+}
+
+.sidebar h3 {
+    margin-bottom: 0.7rem;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0.4rem 0;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    color: var(--primary);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.kpi-card {
+    padding: 1rem;
+}
+
+.kpi-card p {
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.kpi-card h3 {
+    margin-top: 0.3rem;
+    font-size: 1.6rem;
+}
+
+.auth-wrap {
+    min-height: calc(100vh - 160px);
+    display: grid;
+    place-items: center;
+    padding: 2rem 0;
+}
+
+.auth-card {
+    width: min(470px, 94%);
+    padding: 1.4rem;
+    box-shadow: 0 14px 36px rgba(13, 46, 70, 0.1);
+}
+
+.patient-auth .auth-card-patient {
+    background: linear-gradient(180deg, #ffffff 0%, #f2faff 100%);
+}
+
+.doctor-auth .auth-card-doctor {
+    background: linear-gradient(180deg, #ffffff 0%, #eff5ff 100%);
+    border-color: #cfdaee;
+}
+
+.auth-card h2 {
+    margin-bottom: 0.25rem;
+}
+
+.auth-card p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    margin-bottom: 0.9rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #cddcea;
+    font-family: inherit;
+}
+
+.mini-upload-form {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 0.7rem;
+}
+
+.mini-upload-form input[type="file"] {
+    border: 1px dashed #b7c7de;
+    border-radius: 10px;
+    padding: 0.55rem;
+    background: #f9fcff;
+}
+
+.timeline-list {
+    margin: 0.6rem 0 0;
+    padding-left: 1rem;
+    color: var(--muted);
+}
+
+.timeline-list li {
+    margin: 0.5rem 0;
+}
+
+.input-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.helper {
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.site-footer {
+    margin-top: 1.7rem;
+    border-top: 1px solid var(--line);
+    background: #f9fcff;
+    padding: 1.35rem 0 1rem;
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-grid p {
+    color: var(--muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.disclaimer {
+    margin: 0.9rem auto 0;
+    text-align: center;
+    color: #658097;
+    font-size: 0.82rem;
+}
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(13, 35, 53, 0.75);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.loading-overlay.show {
+    display: flex;
+}
+
+.spinner {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    animation: spin 0.95s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.danger {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.success {
+    color: var(--success);
+    font-weight: 700;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.truncate {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.actions-inline {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.mb-12 {
+    margin-bottom: 0.75rem;
+}
+
+.mb-24 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+@media (max-width: 980px) {
+    .hero-grid,
+    .panel-grid,
+    .dashboard-grid,
+    .grid-3,
+    .split-grid,
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        right: 4%;
+        width: min(290px, 92%);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 0.8rem;
+        background: #fff;
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-links .btn {
+        width: 100%;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .row-between {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    thead th,
+    tbody td {
+        padding: 0.6rem;
+    }
+}
+
+/*
+ * === WoundSense public homepage (templates/index.html only) ===
+ * All rules scoped under .ws-public so app pages are unaffected.
+ */
+.ws-public {
+    overflow-x: hidden;
+    background: #ffffff;
+    color: #0f172a;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.55;
+}
+
+.ws-public .ws-shell {
+    width: min(1100px, 92%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ws-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.ws-header__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 72px;
+}
+
+.ws-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 0.7rem);
+    text-decoration: none;
+    color: inherit;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.ws-brand__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ws-brand__svg {
+    display: block;
+    width: clamp(2rem, 5.5vw, 2.375rem);
+    height: clamp(2rem, 5.5vw, 2.375rem);
+    filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.18));
+}
+
+.ws-brand__wordmark {
+    font-size: clamp(1.02rem, 2.6vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    white-space: nowrap;
+}
+
+.ws-brand__wordmark-ai {
+    font-weight: 800;
+    color: #0284c7;
+    letter-spacing: -0.04em;
+}
+
+.ws-brand:hover .ws-brand__wordmark {
+    color: #1e3a8a;
+}
+
+.ws-brand:hover .ws-brand__wordmark-ai {
+    color: #0369a1;
+}
+
+.ws-brand:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+.ws-menu-toggle.menu-toggle {
+    margin-left: auto;
+}
+
+.ws-nav__drawer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.ws-nav__pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ws-nav__pill--ghost {
+    color: #2563eb;
+    background: #ffffff;
+    border: 2px solid #bfdbfe;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.ws-nav__pill--ghost:hover {
+    background: #eff6ff;
+}
+
+.ws-nav__pill--primary {
+    color: #ffffff;
+    background: #2563eb;
+    border: 2px solid #2563eb;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+}
+
+.ws-nav__pill--primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.ws-nav__pill--teal {
+    color: #0f766e;
+    background: #ffffff;
+    border: 2px solid #99f6e4;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.ws-nav__pill--teal:hover {
+    background: #f0fdfa;
+}
+
+.ws-main {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #ffffff 100%);
+}
+
+.ws-flash-wrap {
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+}
+
+.ws-flash {
+    margin: 0 0 0.5rem;
+    padding: 0.65rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.ws-flash--error {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.ws-flash--success {
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+}
+
+.ws-hero {
+    padding: 3.25rem 0 3.5rem;
+}
+
+.ws-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.75rem;
+    align-items: center;
+}
+
+.ws-hero__title {
+    margin: 0;
+    font-size: clamp(1.85rem, 3.3vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+}
+
+.ws-hero__lead {
+    margin: 1rem 0 0;
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.65;
+    max-width: 34rem;
+}
+
+.ws-hero__actions {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.ws-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.78rem 1.4rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ws-btn--primary {
+    color: #ffffff;
+    background: #2563eb;
+    border-color: #2563eb;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.28);
+}
+
+.ws-btn--primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.ws-btn--teal-outline {
+    color: #0f766e;
+    background: #ffffff;
+    border-color: #5eead4;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.ws-btn--teal-outline:hover {
+    background: #f0fdfa;
+}
+
+.ws-hero__meta {
+    margin: 1.1rem 0 0;
+    font-size: 0.9rem;
+}
+
+.ws-link {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.ws-link:hover {
+    color: #1d4ed8;
+}
+
+.ws-hero__art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ws-hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 490px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #dbeafe;
+    box-shadow:
+        0 10px 28px rgba(15, 23, 42, 0.1),
+        0 26px 56px rgba(14, 116, 144, 0.11);
+    background: #e2e8f0;
+}
+
+.ws-hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: -18% -14% auto;
+    height: 55%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(56, 189, 248, 0.2) 0%,
+        transparent 72%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ws-hero-visual__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+
+.ws-hero-visual__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+        linear-gradient(180deg, rgba(14, 116, 144, 0.08), rgba(37, 99, 235, 0.05));
+    mix-blend-mode: multiply;
+}
+
+/* —— Homepage: “How it works” & audience (marketing only) —— */
+.ws-section__title {
+    margin: 0 auto;
+    text-align: center;
+    font-size: clamp(1.45rem, 2.6vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    max-width: 36rem;
+    line-height: 1.2;
+}
+
+.ws-works {
+    padding: 3rem 0 3.25rem;
+    background: #ffffff;
+    border-top: 1px solid #f1f5f9;
+}
+
+.ws-works__grid {
+    margin-top: 2.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.ws-info-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.5rem 1.4rem 1.45rem;
+    box-shadow: 0 10px 36px rgba(15, 23, 42, 0.06);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ws-info-card:hover {
+    box-shadow: 0 14px 44px rgba(37, 99, 235, 0.09);
+    border-color: #cbd5e1;
+}
+
+.ws-info-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #eff6ff 0%, #ecfeff 100%);
+    border: 1px solid #bfdbfe;
+    color: #2563eb;
+    margin-bottom: 1.15rem;
+}
+
+.ws-info-card__icon--sm {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.ws-info-card__icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.ws-info-card__icon--sm svg {
+    width: 23px;
+    height: 23px;
+}
+
+.ws-info-card__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.ws-info-card__text {
+    margin: 0.65rem 0 0;
+    font-size: 0.94rem;
+    color: #64748b;
+    line-height: 1.62;
+}
+
+.ws-empower {
+    padding: 3rem 0 3.25rem;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+}
+
+.ws-empower__grid {
+    margin-top: 2.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.ws-audience-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.5rem 1.45rem 1.55rem;
+    box-shadow: 0 10px 36px rgba(15, 23, 42, 0.05);
+}
+
+.ws-audience-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ws-audience-card__title {
+    margin: 0;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+}
+
+.ws-audience-card__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.ws-audience-card__list li {
+    position: relative;
+    padding-left: 1.45rem;
+    font-size: 0.94rem;
+    color: #475569;
+    line-height: 1.55;
+}
+
+.ws-audience-card__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.ws-about {
+    padding: 3rem 0 4rem;
+    background: #ffffff;
+    border-top: 1px solid #f1f5f9;
+}
+
+.ws-about__title {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+}
+
+.ws-about__text {
+    margin: 0.85rem 0 0;
+    font-size: 1.02rem;
+    color: #64748b;
+    line-height: 1.65;
+    max-width: 52rem;
+}
+
+.ws-features {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.ws-features__item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #334155;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.ws-features__badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    flex-shrink: 0;
+}
+
+.ws-footer {
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    padding: 2.25rem 0 1.75rem;
+}
+
+.ws-footer__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.ws-public .ws-brand--footer {
+    gap: clamp(0.45rem, 1.8vw, 0.65rem);
+}
+
+.ws-public .ws-brand--footer .ws-brand__svg {
+    width: clamp(1.85rem, 4.25vw, 2.1rem);
+    height: clamp(1.85rem, 4.25vw, 2.1rem);
+    filter: drop-shadow(0 2px 5px rgba(37, 99, 235, 0.15));
+}
+
+.ws-public .ws-brand--footer .ws-brand__wordmark {
+    font-size: clamp(0.97rem, 2.35vw, 1.08rem);
+}
+
+.ws-public .ws-brand--footer .ws-brand__wordmark-ai {
+    font-weight: 800;
+}
+
+.ws-footer__tagline {
+    margin: 0.55rem 0 0;
+    max-width: 22rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.55;
+}
+
+.ws-footer__contact-title {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.ws-footer__email {
+    margin: 0.4rem 0 0;
+    font-size: 0.9rem;
+}
+
+.ws-footer__email a {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.ws-footer__email a:hover {
+    text-decoration: underline;
+}
+
+.ws-footer__copyright {
+    margin: 1.75rem 0 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+/*
+ * Patient login (templates/login.html) — same visual system as ws-public homepage
+ */
+.ws-public.ws-auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 38%, #ffffff 100%);
+}
+
+.ws-auth-page .ws-auth-header__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 72px;
+}
+
+.ws-auth-page .ws-auth-header__brand {
+    justify-self: start;
+    min-width: 0;
+}
+
+.ws-auth-page .ws-auth-header__center {
+    justify-self: center;
+}
+
+.ws-auth-page .ws-auth-header__spacer {
+    justify-self: end;
+    width: 100%;
+}
+
+.ws-auth-page .ws-main.ws-auth-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.ws-auth-page .ws-auth-wrap {
+    flex: 1;
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    padding: 2.25rem 0 2.75rem;
+}
+
+.ws-auth-page .ws-auth-layout {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: center;
+}
+
+.ws-auth-page .ws-auth-form-card {
+    width: min(440px, 100%);
+    margin: 0 auto;
+    padding: 2rem 1.85rem 1.75rem;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    box-shadow:
+        0 4px 6px rgba(15, 23, 42, 0.04),
+        0 16px 36px rgba(15, 23, 42, 0.07);
+    transition: box-shadow 0.2s ease;
+}
+
+.ws-auth-page .ws-auth-visual {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.ws-auth-page .ws-auth-visual__frame {
+    position: relative;
+    width: min(540px, 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #dbeafe;
+    box-shadow:
+        0 10px 28px rgba(15, 23, 42, 0.1),
+        0 24px 56px rgba(14, 116, 144, 0.11);
+    background: #e2e8f0;
+}
+
+.ws-auth-page .ws-auth-visual__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center;
+}
+
+.ws-auth-page .ws-auth-visual__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+        linear-gradient(180deg, rgba(14, 116, 144, 0.08), rgba(37, 99, 235, 0.05));
+    mix-blend-mode: multiply;
+}
+
+.ws-auth-page .ws-auth-form-card:hover {
+    box-shadow:
+        0 6px 10px rgba(15, 23, 42, 0.05),
+        0 20px 42px rgba(15, 23, 42, 0.09);
+}
+
+.ws-auth-page .auth-card-patient {
+    background: #ffffff;
+}
+
+.ws-auth-page .auth-card-doctor {
+    background: #ffffff;
+}
+
+.ws-auth-page .ws-auth-form-card--signup {
+    width: min(460px, 100%);
+}
+
+.ws-auth-page .ws-auth-form-card__eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.ws-auth-page .ws-auth-form-card__title {
+    margin: 1rem 0 0;
+    font-size: clamp(1.32rem, 2.8vw, 1.62rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: #0f172a;
+}
+
+.ws-auth-page .ws-auth-form-card__lead {
+    margin: 0.7rem 0 0;
+    font-size: 0.97rem;
+    color: #64748b;
+    line-height: 1.62;
+    margin-bottom: 1.4rem;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group {
+    margin-bottom: 1.05rem;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group label {
+    display: block;
+    margin-bottom: 0.42rem;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #334155;
+    letter-spacing: 0.01em;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group input {
+    width: 100%;
+    padding: 0.8rem 0.95rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #fafbfc;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #0f172a;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group input::placeholder {
+    color: #94a3b8;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group input:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+.ws-auth-page .ws-auth-form-card .input-group input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    background: #ffffff;
+}
+
+.ws-auth-page .ws-auth-form-card__submit {
+    width: 100%;
+    margin-top: 1.35rem;
+    padding: 0.82rem 1.35rem;
+    font-size: 0.92rem;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ws-auth-page .ws-auth-form-card__submit:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+}
+
+.ws-auth-page .ws-auth-form-card__helper {
+    margin: 1.2rem 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.ws-auth-page .ws-auth-form-card__helper a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.ws-auth-page .ws-auth-form-card__helper a:hover {
+    color: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+    .ws-auth-page .ws-auth-header__bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        row-gap: 0.65rem;
+    }
+
+    .ws-auth-page .ws-auth-header__center {
+        order: 3;
+        flex: 1 1 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .ws-auth-page .ws-auth-header__spacer {
+        display: none;
+    }
+
+    .ws-auth-page .ws-auth-form-card {
+        padding: 1.65rem 1.35rem 1.5rem;
+    }
+}
+
+@media (max-width: 980px) {
+    .ws-auth-page .ws-auth-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-auth-page .ws-auth-visual {
+        order: 2;
+    }
+
+    .ws-auth-page .ws-auth-form-card {
+        width: min(460px, 100%);
+    }
+}
+
+@media (max-width: 760px) {
+    .ws-auth-page .ws-auth-visual {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .ws-auth-page--doctor .ws-auth-visual {
+        display: flex;
+        order: 2;
+    }
+}
+
+@media (max-width: 900px) {
+    .ws-hero__grid {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+    }
+
+    .ws-hero__art {
+        order: -1;
+    }
+
+    .ws-works__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-empower__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .ws-public .ws-menu-toggle {
+        display: block;
+    }
+
+    .ws-nav__drawer {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.85rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    .ws-nav__drawer.show {
+        display: flex;
+    }
+
+    .ws-nav__drawer .ws-nav__pill {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 761px) {
+    .ws-public .ws-menu-toggle {
+        display: none;
+    }
+}
+
+/*
+ * === Patient portal (dashboard, history, result) — WoundSense design system ===
+ */
+.ws-patient-portal {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+    color: #0f172a;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.ws-patient-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 260px) 1fr;
+    flex: 1;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 0;
+}
+
+.ws-patient-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.35rem 1.1rem;
+    background: rgba(255, 255, 255, 0.97);
+    border-right: 1px solid #e2e8f0;
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    min-height: 100vh;
+    z-index: 5;
+}
+
+.ws-patient-sidebar__brand.ws-brand {
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ws-patient-sidebar__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.5rem;
+    background: #f8fafc;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.ws-patient-sidebar__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #eff6ff, #ecfeff);
+    border: 1px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    color: #1d4ed8;
+    flex-shrink: 0;
+}
+
+.ws-patient-sidebar__user-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.ws-patient-sidebar__user-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+}
+
+.ws-patient-sidebar__name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.ws-patient-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.ws-patient-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ws-patient-nav-link:hover {
+    background: #eff6ff;
+    color: #1e40af;
+}
+
+.ws-patient-nav-link.is-active {
+    background: linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%);
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.ws-patient-nav-link__icon {
+    display: flex;
+    color: #2563eb;
+    opacity: 0.9;
+}
+
+.ws-patient-nav-link--quiet {
+    margin-top: auto;
+    color: #64748b;
+}
+
+.ws-patient-nav-link--quiet:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.ws-patient-sidebar__bottom {
+    padding-top: 0.75rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.ws-patient-main {
+    padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1rem, 3vw, 2rem) 2.5rem;
+    min-width: 0;
+}
+
+.ws-patient-main__header {
+    margin-bottom: 1.75rem;
+}
+
+.ws-patient-main__title {
+    margin: 0;
+    font-size: clamp(1.45rem, 3vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.ws-patient-main__subtitle {
+    margin: 0.4rem 0 0;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+.ws-patient-section {
+    margin-bottom: 2.25rem;
+}
+
+.ws-patient-section__title {
+    margin: 0 0 0.85rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: -0.02em;
+}
+
+.ws-patient-upload-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.5rem 1.4rem;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+}
+
+.ws-patient-upload-card__lead {
+    margin: 0 0 1rem;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.ws-patient-upload-form {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.ws-patient-upload-dropzone {
+    position: relative;
+    border-radius: 16px;
+    border: 1.5px dashed #93c5fd;
+    background: linear-gradient(180deg, #f8fbff 0%, #f8fafc 100%);
+    padding: 1.15rem 1rem 1rem;
+    min-height: 154px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.ws-patient-upload-dropzone:hover {
+    border-color: #60a5fa;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.09);
+    transform: translateY(-1px);
+}
+
+.ws-patient-upload-dropzone.is-drag-over {
+    border-color: #0ea5e9;
+    background: linear-gradient(180deg, #eff6ff 0%, #ecfeff 100%);
+    box-shadow: 0 10px 26px rgba(14, 165, 233, 0.13);
+}
+
+.ws-patient-upload-dropzone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.ws-patient-upload-dropzone__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #bfdbfe;
+    background: linear-gradient(145deg, #eff6ff, #ecfeff);
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ws-patient-upload-dropzone__icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ws-patient-upload-dropzone__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.ws-patient-upload-dropzone__hint {
+    font-size: 0.79rem;
+    color: #64748b;
+}
+
+.ws-patient-upload-form__actions {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.ws-patient-upload-form__submit {
+    flex-shrink: 0;
+}
+
+.ws-patient-upload-form.is-analyzing .ws-patient-upload-form__submit {
+    opacity: 0.88;
+    cursor: not-allowed;
+}
+
+.ws-patient-upload-preview {
+    margin-top: 1rem;
+    max-width: 340px;
+    animation: ws-upload-fade-in 0.22s ease-out;
+}
+
+.ws-patient-upload-preview__img-wrap {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #dbeafe;
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.08),
+        0 18px 32px rgba(14, 116, 144, 0.1);
+    background: #e2e8f0;
+}
+
+.ws-patient-upload-preview__img-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.ws-patient-upload-preview__glass {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+        linear-gradient(180deg, rgba(14, 116, 144, 0.09), rgba(37, 99, 235, 0.04));
+    mix-blend-mode: multiply;
+}
+
+.ws-patient-upload-preview__name {
+    margin: 0.55rem 0 0;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.45;
+}
+
+@keyframes ws-upload-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ws-patient-upload-progress {
+    margin-top: 0.9rem;
+    max-width: 420px;
+}
+
+.ws-patient-upload-progress__bar {
+    height: 8px;
+    border-radius: 999px;
+    background: #dbeafe;
+    overflow: hidden;
+}
+
+.ws-patient-upload-progress__fill {
+    display: block;
+    width: 35%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #38bdf8, #2563eb);
+    animation: ws-upload-progress 1.15s ease-in-out infinite;
+}
+
+@keyframes ws-upload-progress {
+    0% {
+        transform: translateX(-110%);
+    }
+    100% {
+        transform: translateX(340%);
+    }
+}
+
+.ws-patient-upload-progress__text {
+    margin: 0.45rem 0 0;
+    font-size: 0.82rem;
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.ws-patient-upload-feedback {
+    min-height: 1.1rem;
+    margin: 0.7rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: #64748b;
+}
+
+.ws-patient-upload-feedback[data-state="error"] {
+    color: #b91c1c;
+}
+
+.ws-patient-upload-feedback[data-state="success"] {
+    color: #047857;
+}
+
+.ws-patient-upload-feedback[data-state="info"] {
+    color: #0f766e;
+}
+
+.ws-patient-recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.ws-patient-recent-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ws-patient-recent-card:hover {
+    border-color: #bfdbfe;
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.1);
+}
+
+.ws-patient-recent-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.ws-patient-recent-card__thumb-wrap {
+    aspect-ratio: 4 / 3;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.ws-patient-recent-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ws-patient-recent-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem 0.25rem;
+    flex-wrap: wrap;
+}
+
+.ws-patient-recent-card__date {
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+.ws-patient-recent-card__conf {
+    margin: 0 0.85rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.ws-patient-status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.ws-patient-status-pill--ok {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.ws-patient-status-pill--alert {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.ws-patient-empty {
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 1.35rem 1.25rem;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.ws-patient-empty--soft {
+    background: #f8fafc;
+    border-style: solid;
+    border-color: #e2e8f0;
+}
+
+.ws-patient-empty--card {
+    text-align: center;
+    max-width: 28rem;
+    margin: 0 auto;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.ws-patient-empty__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: #0f172a;
+}
+
+.ws-patient-summary-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.35rem 1.4rem 1.5rem;
+    box-shadow: 0 10px 32px rgba(15, 23, 42, 0.07);
+}
+
+.ws-patient-summary-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 1rem;
+}
+
+.ws-patient-summary-card__label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.35rem;
+}
+
+.ws-patient-summary-card__when {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #64748b;
+}
+
+.ws-patient-summary-card__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.ws-patient-confidence-ring {
+    --p: 0;
+    width: 118px;
+    height: 118px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: conic-gradient(
+        from -90deg,
+        #38bdf8 0deg,
+        #2563eb calc(var(--p) * 360deg),
+        #e2e8f0 calc(var(--p) * 360deg)
+    );
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.ws-patient-confidence-ring__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.ws-patient-confidence-ring::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.ws-patient-confidence-ring__value {
+    position: relative;
+    z-index: 1;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1e40af;
+    line-height: 1.2;
+}
+
+.ws-patient-confidence-ring__sub {
+    position: relative;
+    z-index: 1;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-top: 0.15rem;
+}
+
+.ws-patient-summary-card__copy {
+    flex: 1;
+    min-width: 200px;
+}
+
+.ws-patient-summary-card__copy p {
+    margin: 0 0 0.75rem;
+    color: #475569;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.ws-patient-history-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ws-patient-stats-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.ws-patient-stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.ws-patient-stat-chip strong {
+    color: #0f172a;
+}
+
+.ws-patient-stat-chip--alert {
+    color: #b91c1c;
+}
+
+.ws-patient-stat-chip--ok {
+    color: #047857;
+}
+
+.ws-patient-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ws-patient-filter__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.ws-patient-filter__input {
+    padding: 0.55rem 0.85rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #fafbfc;
+    font-family: inherit;
+    font-size: 0.88rem;
+    min-width: 200px;
+    max-width: 100%;
+}
+
+.ws-patient-filter__input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    background: #fff;
+}
+
+.ws-patient-table-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 0.5rem;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+}
+
+.ws-patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.ws-patient-table th {
+    text-align: left;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ws-patient-table td {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid #f8fafc;
+    vertical-align: middle;
+}
+
+.ws-patient-thumb {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    display: block;
+}
+
+.ws-patient-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.ws-patient-actions__btn,
+.ws-patient-actions__del {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.75rem !important;
+}
+
+.ws-patient-actions__form {
+    display: inline;
+    margin: 0;
+}
+
+.ws-patient-actions__del {
+    border: none;
+    cursor: pointer;
+    background: #ffffff;
+    color: #b91c1c;
+    border: 2px solid #fecaca;
+}
+
+.ws-patient-result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.ws-patient-result-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ws-patient-result-summary__card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.05rem 1.15rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ws-patient-result-summary__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+}
+
+.ws-patient-result-summary__label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.ws-patient-result-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.1rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.ws-patient-result-panel__title {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.ws-patient-result-panel__img-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.ws-patient-result-panel__img-wrap img {
+    width: 100%;
+    display: block;
+    max-height: 340px;
+    object-fit: cover;
+}
+
+.ws-patient-result-verdict {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.05rem 1.15rem 1.2rem;
+    box-shadow: 0 10px 32px rgba(15, 23, 42, 0.07);
+}
+
+.ws-patient-result-insights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.ws-patient-result-verdict__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.ws-patient-result-verdict__label {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 0.9rem;
+}
+
+.ws-patient-confidence-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+
+.ws-patient-confidence-row__value {
+    font-weight: 800;
+    color: #1e40af;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+}
+
+.ws-patient-confidence-track {
+    height: 8px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+    margin-bottom: 1.35rem;
+}
+
+.ws-patient-confidence-track__fill {
+    height: 100%;
+    border-radius: inherit;
+    width: var(--confidence);
+    transform-origin: left center;
+    animation: ws-confidence-fill 0.9s ease-out both;
+}
+
+@keyframes ws-confidence-fill {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.ws-patient-confidence-track__fill--ok {
+    background: linear-gradient(90deg, #5eead4, #0d9488);
+}
+
+.ws-patient-confidence-track__fill--alert {
+    background: linear-gradient(90deg, #fda4af, #dc2626);
+}
+
+.ws-patient-result-block {
+    margin-bottom: 1.15rem;
+}
+
+.ws-patient-result-block--card {
+    margin-bottom: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.1rem 1.2rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.ws-patient-result-block__title {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.ws-patient-result-block p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.65;
+    font-size: 0.94rem;
+}
+
+.ws-patient-result-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: #475569;
+    line-height: 1.55;
+    font-size: 0.94rem;
+}
+
+.ws-patient-result-list li {
+    margin: 0.35rem 0;
+}
+
+.ws-patient-result-meta {
+    font-size: 0.85rem;
+    margin-bottom: 1rem !important;
+}
+
+.ws-patient-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.ws-patient-result-actions form {
+    display: inline;
+    margin: 0;
+}
+
+.ws-btn--danger-outline {
+    color: #b91c1c;
+    background: #ffffff;
+    border: 2px solid #fecaca;
+    box-shadow: 0 2px 8px rgba(185, 28, 28, 0.08);
+}
+
+.ws-btn--danger-outline:hover {
+    background: #fef2f2;
+}
+
+.ws-patient-status-pill--lg {
+    font-size: 0.78rem;
+    padding: 0.34rem 0.72rem;
+}
+
+.ws-fade-in-up {
+    animation: ws-fade-in-up 0.38s ease-out both;
+}
+
+.ws-fade-in-up--delay-1 {
+    animation-delay: 0.06s;
+}
+
+.ws-fade-in-up--delay-2 {
+    animation-delay: 0.12s;
+}
+
+.ws-fade-in-up--delay-3 {
+    animation-delay: 0.18s;
+}
+
+@keyframes ws-fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ws-patient-portal__footer {
+    margin-top: auto;
+}
+
+.ws-patient-portal__footer .ws-footer__tagline {
+    margin-top: 0;
+}
+
+@media (max-width: 960px) {
+    .ws-patient-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-patient-sidebar {
+        position: relative;
+        min-height: 0;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .ws-patient-sidebar__nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .ws-patient-sidebar__bottom {
+        border-top: none;
+        width: 100%;
+    }
+}
+
+/*
+ * === Doctor portal (doctor login/dashboard/report) ===
+ */
+.ws-doctor-portal {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 55%, #f8fafc 100%);
+}
+
+.ws-doctor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 260px) 1fr;
+    flex: 1;
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+}
+
+.ws-doctor-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    padding: 1.25rem 1.05rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-right: 1px solid #e2e8f0;
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    min-height: 100vh;
+    z-index: 5;
+}
+
+.ws-doctor-sidebar__brand.ws-brand {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 0.4rem;
+}
+
+.ws-doctor-sidebar__user {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.65rem 0.6rem;
+}
+
+.ws-doctor-sidebar__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #eff6ff, #ecfeff);
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.ws-doctor-sidebar__user-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+}
+
+.ws-doctor-sidebar__user-label {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.ws-doctor-sidebar__name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.ws-doctor-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.ws-doctor-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    border-radius: 12px;
+    padding: 0.55rem 0.65rem;
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ws-doctor-nav-link:hover {
+    background: #eff6ff;
+    color: #1e40af;
+}
+
+.ws-doctor-nav-link.is-active {
+    background: linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%);
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.ws-doctor-nav-link__icon {
+    display: flex;
+    color: #2563eb;
+    opacity: 0.9;
+}
+
+.ws-doctor-sidebar__bottom {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+}
+
+.ws-doctor-nav-link--quiet:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.ws-doctor-main {
+    padding: clamp(1.25rem, 3vw, 2.2rem) clamp(1rem, 3vw, 2rem) 2.4rem;
+    min-width: 0;
+}
+
+.ws-doctor-main__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.4rem;
+}
+
+.ws-doctor-main__title {
+    margin: 0;
+    font-size: clamp(1.45rem, 3vw, 1.95rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+}
+
+.ws-doctor-main__subtitle {
+    margin: 0.35rem 0 0;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.ws-doctor-section {
+    margin-bottom: 2rem;
+}
+
+.ws-doctor-section__title {
+    margin: 0 0 0.85rem;
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: -0.02em;
+}
+
+.ws-doctor-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.9rem;
+}
+
+.ws-doctor-kpi-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem 1.05rem;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+}
+
+.ws-doctor-kpi-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.ws-doctor-kpi-card h3 {
+    margin: 0.3rem 0 0;
+    font-size: 1.65rem;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+}
+
+.ws-doctor-table-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 0.55rem;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+}
+
+.ws-doctor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.ws-doctor-table th {
+    text-align: left;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.72rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ws-doctor-table td {
+    padding: 0.65rem 0.5rem;
+    border-bottom: 1px solid #f8fafc;
+    vertical-align: middle;
+}
+
+.ws-doctor-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #e2e8f0;
+    display: block;
+}
+
+.ws-doctor-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.ws-doctor-chart-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+}
+
+.ws-doctor-chart-card h3 {
+    margin: 0 0 0.75rem;
+    font-size: 0.94rem;
+    color: #1e3a8a;
+}
+
+.ws-doctor-bar-chart {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.5rem;
+    align-items: end;
+    min-height: 180px;
+}
+
+.ws-doctor-bar-chart__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ws-doctor-bar-chart__track {
+    width: 100%;
+    height: 145px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.ws-doctor-bar-chart__fill {
+    width: 100%;
+    border-radius: 9px 9px 0 0;
+    min-height: 4px;
+}
+
+.ws-doctor-bar-chart__fill--infection {
+    background: linear-gradient(180deg, #fda4af, #dc2626);
+}
+
+.ws-doctor-bar-chart__fill--accuracy {
+    background: linear-gradient(180deg, #60a5fa, #2563eb);
+}
+
+.ws-doctor-bar-chart__label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.ws-doctor-report-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.ws-doctor-report-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem 1.05rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.ws-doctor-report-card h2 {
+    margin: 0 0 0.65rem;
+    font-size: 0.98rem;
+    color: #1e3a8a;
+}
+
+.ws-doctor-report-card p {
+    margin: 0.3rem 0;
+    color: #475569;
+    font-size: 0.92rem;
+}
+
+.ws-doctor-review-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.ws-doctor-review-card {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    padding: 1rem 1.05rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.ws-doctor-review-card h3 {
+    margin: 0 0 0.8rem;
+    color: #1e3a8a;
+    font-size: 1rem;
+}
+
+.ws-doctor-review-card p {
+    margin: 0.4rem 0;
+    color: #475569;
+}
+
+.ws-doctor-review-form {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.ws-doctor-review-form textarea {
+    resize: vertical;
+}
+
+.ws-patient-doctor-review {
+    border-color: #dbeafe;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.ws-patient-doctor-review p {
+    margin: 0.45rem 0;
+}
+
+.ws-doctor-portal__footer {
+    margin-top: auto;
+}
+
+@media (max-width: 960px) {
+    .ws-doctor-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-doctor-sidebar {
+        position: relative;
+        min-height: 0;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .ws-doctor-sidebar__nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+/* ============================================================
+   SPLASH ANIMATION  (REMOVABLE SECTION)
+   ------------------------------------------------------------
+   Opening logo animation styles only. Every selector below is
+   scoped under .ws-splash so removing this whole section will
+   not affect any other layout, auth, ML, or prediction styling.
+
+   To remove the animation completely:
+     1. Delete this entire CSS section (down to the matching
+        END SPLASH ANIMATION marker).
+     2. Delete the splash HTML block in templates/index.html.
+     3. Delete the splash logic block in static/js/main.js.
+   ============================================================ */
+
+/* Body scroll lock while splash is visible (added by JS). */
+html.ws-splash-lock,
+html.ws-splash-lock body {
+    overflow: hidden;
+}
+
+.ws-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #f8fcff 0%, #eaf4ff 45%, #e6fbf6 100%);
+    opacity: 1;
+    pointer-events: auto;
+    /* Soft healthcare blue glow at the center */
+    background-image:
+        radial-gradient(circle at 50% 45%, rgba(14, 165, 233, 0.10), rgba(14, 165, 233, 0) 55%),
+        linear-gradient(135deg, #f8fcff 0%, #eaf4ff 45%, #e6fbf6 100%);
+    /* Fallback fade-out via CSS in case JS does not run.
+       JS still drives the real timing; this only ensures the page
+       is never blocked if JS is disabled. Matches the ~2.7s total
+       experience controlled by the JS section. */
+    animation: wsSplashAutoFade 2.9s ease forwards;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.ws-splash__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    text-align: center;
+    transform: translateY(0);
+    animation: wsSplashLogoIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ws-splash__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(72px, 18vw, 108px);
+    height: clamp(72px, 18vw, 108px);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 14px 40px rgba(14, 165, 233, 0.20),
+        0 4px 14px rgba(37, 99, 235, 0.10);
+    backdrop-filter: blur(6px);
+}
+
+.ws-splash__svg {
+    width: 70%;
+    height: 70%;
+    display: block;
+    filter: drop-shadow(0 3px 10px rgba(37, 99, 235, 0.25));
+}
+
+.ws-splash__wordmark {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: clamp(1.25rem, 4.5vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    margin-top: 0.25rem;
+}
+
+.ws-splash__wordmark-ai {
+    font-weight: 800;
+    color: #0284c7;
+    letter-spacing: -0.04em;
+}
+
+.ws-splash__tagline {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: clamp(0.78rem, 2.6vw, 0.92rem);
+    color: #475569;
+    letter-spacing: 0.01em;
+}
+
+/* Exit state added by JS to fade the splash out smoothly. */
+.ws-splash.ws-splash--exit {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Logo entrance: subtle scale + fade + slight rise. */
+@keyframes wsSplashLogoIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.88);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(0) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* CSS-only fallback so the page is never blocked if JS fails.
+   Holds the logo longer (~83% of the timeline) before fading. */
+@keyframes wsSplashAutoFade {
+    0%, 83% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+    .ws-splash {
+        animation-duration: 0.6s;
+    }
+    .ws-splash__inner {
+        animation: wsSplashLogoInReduced 0.3s ease both;
+    }
+    @keyframes wsSplashLogoInReduced {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+}
+
+/* ============================================================
+   END SPLASH ANIMATION
+   ============================================================ */
+
+/* ============================================================
+   LANGUAGE TOGGLE (EN / AR)  — STEP 1 STYLES
+   ------------------------------------------------------------
+   Styles for the small EN/AR pill switcher rendered by
+   templates/includes/language_toggle.html. Self-contained:
+   every selector starts with .ws-lang-toggle so removing this
+   block also fully removes the toggle styling.
+   ============================================================ */
+.ws-lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.2rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.ws-lang-toggle__btn {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    transition: background 0.18s ease, color 0.18s ease,
+                box-shadow 0.18s ease;
+    white-space: nowrap;
+}
+
+.ws-lang-toggle__btn:hover:not(.is-active) {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.ws-lang-toggle__btn.is-active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.22);
+}
+
+.ws-lang-toggle__btn:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* ----- Sidebar embedding wrapper -----------------------------
+   Used by the patient and doctor sidebars to host the language
+   toggle inside their `__bottom` block with consistent spacing
+   above the logout link. Keeping this scoped to a wrapper means
+   the global `.ws-lang-toggle` styling is reused unchanged. */
+.ws-sidebar-lang {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.6rem;
+}
+
+/* ============================================================
+   END LANGUAGE TOGGLE
+   ============================================================ */
+
+/* ============================================================
+   RTL SUPPORT  (SCAFFOLD — STEP 1)
+   ------------------------------------------------------------
+   Activated only when <html dir="rtl"> is set, which currently
+   happens only after the user picks Arabic via the language
+   toggle. Because English remains the default, every selector
+   below is dormant for the existing site and CANNOT change
+   current LTR layout.
+
+   Browsers natively flip most flow-relative behavior when
+   `dir="rtl"` is set on <html>. The few overrides we keep here
+   are limited to:
+     - choosing a font stack better suited to Arabic glyphs
+     - giving the language toggle a comfortable letter-spacing
+       reset for non-Latin labels.
+
+   Page-specific RTL fixes will be added page-by-page in later
+   steps, e.g.:
+
+       [dir="rtl"] .ws-hero__copy { text-align: right; }
+       [dir="rtl"] .ws-nav__pill  { ... }
+   ============================================================ */
+[dir="rtl"] body {
+    /* Native fonts only — no external dependencies. */
+    font-family: "Segoe UI", "Tahoma", "Cairo",
+                 "Noto Naskh Arabic", "Geeza Pro",
+                 Arial, sans-serif;
+}
+
+[dir="rtl"] .ws-lang-toggle__btn[lang="ar"] {
+    letter-spacing: 0;
+}
+
+/* ----- Homepage-specific RTL fixes (Step 2) -------------------
+   These overrides ONLY take effect when <html dir="rtl">, which
+   is the case after the user picks Arabic from the toggle. They
+   do not change the LTR (English) layout in any way.
+   --------------------------------------------------------------- */
+
+/* 1) Negative letter-spacing on Latin-tuned headings breaks
+      Arabic letter joining. Reset for headings only — leave the
+      brand wordmark alone (it stays in Latin). */
+[dir="rtl"] .ws-hero__title,
+[dir="rtl"] .ws-section__title,
+[dir="rtl"] .ws-info-card__title,
+[dir="rtl"] .ws-audience-card__title,
+[dir="rtl"] .ws-about__title {
+    letter-spacing: 0;
+}
+
+/* 2) Audience card list bullets use physical `padding-left` /
+      `left: 0`. Mirror them so the bullet sits on the right
+      and the text is properly indented from the right edge. */
+[dir="rtl"] .ws-audience-card__list li {
+    padding-left: 0;
+    padding-right: 1.45rem;
+}
+
+[dir="rtl"] .ws-audience-card__list li::before {
+    left: auto;
+    right: 0;
+}
+
+/* 3) Mobile menu toggle uses `margin-left: auto` to push to the
+      right edge in LTR. Mirror it so the button sits on the left
+      edge in RTL (where the row's "end" visually is). */
+[dir="rtl"] .ws-menu-toggle.menu-toggle {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* ----- Authentication pages RTL fixes (Step 3) ----------------
+   Login / signup / doctor-login use a CSS grid with logical
+   `justify-self: start/end`, plus a flex layout that mirrors
+   automatically. The only Latin-tuned details that need a
+   reset for Arabic are the negative letter-spacing on the
+   form-card title and the small positive letter-spacing on
+   the input labels (both harm Arabic letter joining).
+   No spacing, sizing, gradients, shadows, or media queries
+   are touched, so responsiveness is byte-equivalent.
+   --------------------------------------------------------------- */
+[dir="rtl"] .ws-auth-page .ws-auth-form-card__title {
+    letter-spacing: 0;
+}
+
+[dir="rtl"] .ws-auth-page .ws-auth-form-card .input-group label {
+    letter-spacing: 0;
+}
+
+/* ----- Patient dashboard RTL fixes (Step 4) -------------------
+   The dashboard uses CSS Grid + flex with logical alignment, so
+   most things mirror automatically. The two pieces that need an
+   explicit override are physical-side properties on the patient
+   sidebar (border-right + box-shadow that point into the page),
+   and negative letter-spacing on Latin-tuned headings/labels
+   that would otherwise harm Arabic letter joining.
+   No spacing, sizing, gradients, animations, or media queries
+   are touched, so responsiveness is byte-equivalent.
+   --------------------------------------------------------------- */
+
+/* 1) The sidebar lives in the LEFT grid column in LTR; in RTL it
+      auto-flips to the RIGHT column, so its physical right border
+      and rightward shadow now sit on the wrong (outer) side.
+      Mirror them so the divider sits between sidebar and main. */
+[dir="rtl"] .ws-patient-sidebar {
+    border-right: none;
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -4px 0 24px rgba(15, 23, 42, 0.04);
+}
+
+/* 2) Reset negative / Latin-tuned letter-spacing for Arabic. */
+[dir="rtl"] .ws-patient-main__title,
+[dir="rtl"] .ws-patient-section__title,
+[dir="rtl"] .ws-patient-sidebar__user-label,
+[dir="rtl"] .ws-patient-status-pill,
+[dir="rtl"] .ws-patient-summary-card__label,
+[dir="rtl"] .ws-patient-confidence-ring__sub {
+    letter-spacing: 0;
+}
+
+/* ----- Result page RTL fixes (Step 5) -------------------------
+   Most of result.html mirrors automatically because it uses CSS
+   Grid + flex with logical alignment. These overrides handle
+   only the truly physical-side details that don't auto-flip:
+     - the next-steps <ul> indentation,
+     - the confidence-bar fill animation origin,
+     - the small Latin-tuned letter-spacing on the summary label.
+   No spacing, sizing, gradients, shadows, animations duration,
+   or media queries are touched, so responsiveness is preserved.
+   --------------------------------------------------------------- */
+
+/* 1) Suggested-next-steps list uses physical padding-left to make
+      room for the bullets. Mirror it so the bullets sit on the
+      right and the text indents from the right edge. */
+[dir="rtl"] .ws-patient-result-list {
+    padding-left: 0;
+    padding-right: 1.15rem;
+}
+
+/* 2) The confidence-bar fill is `width: var(--confidence)` and
+      animates a scaleX(0)→scaleX(1) from `transform-origin: left`.
+      In RTL the fill is anchored to the right edge of the track,
+      so the origin needs to flip too — otherwise the animation
+      reveals the bar from a non-anchored point. The end visual
+      state is identical to LTR (mirrored). */
+[dir="rtl"] .ws-patient-confidence-track__fill {
+    transform-origin: right center;
+}
+
+/* 3) Reset the Latin-tuned letter-spacing on the summary card
+      label (uppercase doesn't affect Arabic). */
+[dir="rtl"] .ws-patient-result-summary__label {
+    letter-spacing: 0;
+}
+
+/* ----- Doctor portal RTL fixes --------------------------------
+   Same rationale as the patient sidebar: physical border-right /
+   rightward shadow on the doctor sidebar must mirror when the
+   sidebar column sits on the right in RTL. Letter-spacing reset
+   for Latin-tuned doctor headings (does not change LTR).
+   --------------------------------------------------------------- */
+[dir="rtl"] .ws-doctor-sidebar {
+    border-right: none;
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -4px 0 24px rgba(15, 23, 42, 0.04);
+}
+
+[dir="rtl"] .ws-doctor-main__title,
+[dir="rtl"] .ws-doctor-section__title,
+[dir="rtl"] .ws-doctor-sidebar__user-label {
+    letter-spacing: 0;
+}
+
+/* No further RTL overrides yet — added page-by-page later. */
+/* ============================================================
+   END RTL SUPPORT
+   ============================================================ */
