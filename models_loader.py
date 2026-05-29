@@ -4,6 +4,7 @@ Model files are expected in:  WoundAI_Deploy/models/
 """
 
 import os
+import urllib.request
 import numpy as np
 from PIL import Image
 import torch
@@ -95,9 +96,26 @@ def _build_convnext(nc=2):
     return m
 
 
+# ── Download missing weights from Hugging Face ─────────────────────────────
+def download_models_if_missing():
+    os.makedirs(_BASE, exist_ok=True)
+    for filename, url in (
+        ('segmentation_improved_unet.pth',
+         'https://huggingface.co/Maan8/woundai-models/resolve/main/segmentation_improved_unet.pth'),
+        ('cls_overlay_convnext.pth',
+         'https://huggingface.co/Maan8/woundai-models/resolve/main/cls_overlay_convnext.pth'),
+    ):
+        path = os.path.join(_BASE, filename)
+        if not os.path.exists(path):
+            print(f"[Models] Downloading {filename} ...")
+            urllib.request.urlretrieve(url, path)
+
+
 # ── Public: load both models ───────────────────────────────────────────────
 def load_models():
     global _seg_model, _cls_model
+
+    download_models_if_missing()
 
     if not os.path.exists(SEG_PATH):
         raise FileNotFoundError(f"Segmentation model not found:\n  {SEG_PATH}")
